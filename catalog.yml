@@ -134,16 +134,16 @@ apps:
     title: "Linked brush"
     domain: "Statistics and EDA"
     milestone: M3
-    status: planned
+    status: done
     deploy: gallery
     languages: [py, r]
     library: visx
     compare: false
-    features: [useShinyOutputValue, useShinyInputValue, useShinyInput, useShinyInitialized]
-    claim: "Four charts brush each other instantly, all on the client."
+    features: [useShinyOutputValue, useShinyOutputStatus, useShinyInputValue, useShinyInput, useShinyInitialized]
+    claim: "Four charts brush each other while the pointer moves."
     plain_shiny: "Every brush is a round trip, and all four outputs re-render."
-    this_app: "One shared reactive on the server, one shared selection in React state."
-    blurb: "Brush any of four linked charts and the other three follow, with no server involved."
+    this_app: "One payload, one selection in React state, one fit when you let go."
+    blurb: "Brush any of four linked star charts and the other three follow the pointer. Letting go asks the server for one fitted line."
 
   - slug: query-lab
     title: "Query lab"

@@ -1,0 +1,17 @@
+{
+  "name": "linked-brush",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite build --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --root ../.. apps/linked-brush"
+  },
+  "dependencies": {
+    "@visx/axis": "^3.12.0",
+    "@visx/group": "^3.12.0",
+    "@visx/scale": "^3.12.0",
+    "@visx/shape": "^3.12.0"
+  }
+}
