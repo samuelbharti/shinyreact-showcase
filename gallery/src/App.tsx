@@ -35,14 +35,16 @@ export default function App() {
           <p className="eyebrow">The ui.tsx pattern</p>
           <h1>{CATALOG.site.title}</h1>
           <p className="hero-text">
-            React draws the screen. Shiny does the data work. Each app does one
-            thing that plain Shiny does badly. Each one measures the difference
-            and shows the number on screen.
+            Shiny apps I've built to see what the ui.tsx pattern is actually worth:
+            the server keeps the reactive computation, and a React client owns
+            the screen. Each one picks a single thing plain Shiny does badly,
+            then puts a number on what the split buys. {spellOut(compared)} go
+            further. They draw the plain Shiny version alongside, with a counter
+            on each, so you can watch the two come apart while you drag.
           </p>
           <p className="hero-text">
-            {spellOut(compared)} apps draw both versions on one page, each with
-            its own counter. One TSX bundle serves both servers, and the browser
-            does not know whether Python or R answers.
+            The same TSX bundle runs against a Python server and an R one, and
+            nothing in the browser knows the difference.
           </p>
 
           <div className="hero-links">
@@ -145,12 +147,11 @@ function Footer() {
     <footer className="site-footer">
       <div className="footer-inner">
         <p className="footer-about">
-          Each app is a Shiny server that sends data and a React client that
-          draws it. The server holds the reactive computation. The browser owns
-          everything you touch. No app downloads data at run time and no app
-          needs a key. Each app builds its data from a hash of the row number.
-          The Python server, the R server and the browser produce the same
-          values.
+          Nothing here downloads data or needs a key. Every app generates its
+          own from a hash of the row number, so the Python server, the R server
+          and the browser all land on the same values. That is what lets the
+          whole gallery run in one process and deploy as a single piece of
+          content.
         </p>
 
         <ul className="footer-links">
