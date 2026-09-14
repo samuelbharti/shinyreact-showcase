@@ -35,16 +35,14 @@ export default function App() {
           <p className="eyebrow">The ui.tsx pattern</p>
           <h1>{CATALOG.site.title}</h1>
           <p className="hero-text">
-            Shiny apps where React draws the screen and Shiny does the data
-            work. Each one takes a single thing plain Shiny handles badly and
-            puts the measurement beside it: round trips not made, points drawn,
-            milliseconds spent. {spellOut(compared)} of them run both paths on
-            the same page, with a counter on each, so the comparison is
-            something you watch rather than something you are told.
+            React draws the screen. Shiny does the data work. Each app does one
+            thing that plain Shiny does badly. Each one measures the difference
+            and shows the number on screen.
           </p>
           <p className="hero-text">
-            The same TSX bundle is served by a Python server and an R one, and
-            nothing in the browser knows which it is talking to.
+            {spellOut(compared)} apps draw both versions on one page, each with
+            its own counter. One TSX bundle serves both servers, and the browser
+            does not know whether Python or R answers.
           </p>
 
           <div className="hero-links">
@@ -148,10 +146,11 @@ function Footer() {
       <div className="footer-inner">
         <p className="footer-about">
           Each app is a Shiny server that sends data and a React client that
-          draws it. Nothing downloads anything at run time and nothing needs a
-          key: every app builds its own data from a hash of the row number, so
-          the Python server, the R server and the browser agree on it to the
-          last digit.
+          draws it. The server holds the reactive computation. The browser owns
+          everything you touch. No app downloads data at run time and no app
+          needs a key. Each app builds its data from a hash of the row number.
+          The Python server, the R server and the browser produce the same
+          values.
         </p>
 
         <ul className="footer-links">
