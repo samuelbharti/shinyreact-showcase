@@ -8,5 +8,7 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run --root ../.. apps/cell-atlas"
   },
-  "dependencies": {}
+  "dependencies": {
+    "regl-scatterplot": "^1.16.0"
+  }
 }
