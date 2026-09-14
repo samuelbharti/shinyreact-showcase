@@ -119,12 +119,12 @@ apps:
     title: "Protein view"
     domain: "Structural biology"
     milestone: M2
-    status: planned
+    status: done
     deploy: gallery
     languages: [py, r]
     library: 3Dmol.js
     compare: false
-    features: [ShinyOutput, useShinyInput, useShinyOutputValue, useShinyInitialized]
+    features: [ShinyOutput, useShinyInput, useShinyOutputValue, useShinyOutputStatus, useShinyInitialized]
     claim: "Real 3D orbit and style switching, with no htmlwidget to write."
     plain_shiny: "Using a JS library at all means authoring and shipping an R package."
     this_app: "npm install, then import it. A hosted Shiny widget sits beside it, for contrast."

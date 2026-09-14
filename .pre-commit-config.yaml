@@ -65,10 +65,17 @@ repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v5.0.0
     hooks:
+      # Bundled data is not hand written text and must stay exactly as it
+      # came. A PDB file is fixed width, so stripping trailing spaces
+      # shortens the last column and a parser reading by position gets
+      # nothing there. That happened once.
       - id: trailing-whitespace
+        exclude: '^apps/[^/]+/data/'
       - id: end-of-file-fixer
+        exclude: '^apps/[^/]+/data/'
       - id: mixed-line-ending
         args: ["--fix=lf"]
+        exclude: '^apps/[^/]+/data/'
       - id: check-added-large-files
         args: ["--maxkb=2000"]
       - id: check-yaml
@@ -86,4 +93,8 @@ repos:
     rev: v2.3.0
     hooks:
       - id: codespell
-        exclude: '^(package-lock\.json|renv\.lock|manifest\.json)$'
+        # ser is serine, and every amino acid table in this repo lists it.
+        args: ["--ignore-words-list=ser,nd,te,fro"]
+        # Bundled data is copied from upstream, not written here. A PDB file
+        # is full of three letter residue codes that read as typos.
+        exclude: '^(package-lock\.json|renv\.lock|manifest\.json|apps/[^/]+/data/.*)$'
