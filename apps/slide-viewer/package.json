@@ -1,0 +1,14 @@
+{
+  "name": "slide-viewer",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite build --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --root ../.. apps/slide-viewer"
+  },
+  "dependencies": {
+    "openseadragon": "^6.1.1"
+  }
+}
