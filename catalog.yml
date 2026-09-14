@@ -89,7 +89,7 @@ apps:
     title: "Slide viewer"
     domain: "Pathology imaging"
     milestone: M2
-    status: planned
+    status: done
     deploy: gallery
     languages: [py, r]
     library: OpenSeadragon
@@ -97,7 +97,7 @@ apps:
     features: [useShinyInput, useShinyOutputValue, useShinyInitialized]
     claim: "Gigapixel deep zoom, which a server rendered image cannot do at all."
     plain_shiny: "renderImage sends one downsampled PNG. There is no zoom."
-    this_app: "A tile pyramid the client requests as the viewer moves."
+    this_app: "A tile pyramid the client builds as the viewer moves."
     blurb: "A whole slide image at full resolution, tiled and zoomable in the browser."
 
   - slug: city-density

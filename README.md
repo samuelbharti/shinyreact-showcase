@@ -35,7 +35,7 @@ Two more rules keep the apps small:
 
 <!-- catalog:start -->
 
-15 apps, 4 built so far.
+15 apps, 5 built so far.
 
 | # | App | Domain | The claim | Library | Status |
 | --- | --- | --- | --- | --- | --- |
@@ -43,7 +43,7 @@ Two more rules keep the apps small:
 | 2 | Market candles | Finance | Crosshair, pan and zoom with zero server round trips. | lightweight-charts | planned |
 | 3 | [Sensor stream](apps/sensor-stream) | IoT telemetry | Updates at 20Hz append one point instead of redrawing the plot. | uPlot | done |
 | 4 | [Genome tracks](apps/genome-tracks) | Genomics | Drag the locus across a large interval set with no server call. | canvas + d3-scale | done |
-| 5 | Slide viewer | Pathology imaging | Gigapixel deep zoom, which a server rendered image cannot do at all. | OpenSeadragon | planned |
+| 5 | [Slide viewer](apps/slide-viewer) | Pathology imaging | Gigapixel deep zoom, which a server rendered image cannot do at all. | OpenSeadragon | done |
 | 6 | [City density](apps/city-density) | Geospatial | Half a million trips, rebinned into hexagons on every zoom, with no server call. | deck.gl | done |
 | 7 | Protein view | Structural biology | Real 3D orbit and style switching, with no htmlwidget to write. | 3Dmol.js | planned |
 | 8 | Linked brush | Statistics and EDA | Four charts brush each other instantly, all on the client. | visx | planned |
