@@ -194,16 +194,16 @@ apps:
     title: "Churn monitor"
     domain: "ML monitoring"
     milestone: M3
-    status: planned
+    status: done
     deploy: gallery
     languages: [py, r]
     library: visx
     compare: true
-    features: [useShinyInput, useShinyOutputValue, ImageOutput, useShinyInitialized]
+    features: [useShinyInput, useShinyOutputValue, useShinyOutputStatus, ImageOutput, useShinyInitialized]
     claim: "Move the decision threshold and every metric updates with no round trip."
     plain_shiny: "Each slider step recomputes the confusion matrix on the server and redraws four plots."
     this_app: "The server sends scores and labels once. Thresholding is arithmetic in the browser."
-    blurb: "Drag a classifier threshold and watch precision, recall and the ROC point move in real time."
+    blurb: "Drag a classifier threshold, and the price of a mistake, and watch the confusion matrix and the cheapest threshold follow the pointer."
 
   - slug: supply-flow
     title: "Supply flow"

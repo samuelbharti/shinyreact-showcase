@@ -35,7 +35,7 @@ Two more rules keep the apps small:
 
 <!-- catalog:start -->
 
-15 apps, 9 built so far.
+15 apps, 10 built so far.
 
 | # | App | Domain | The claim | Library | Status |
 | --- | --- | --- | --- | --- | --- |
@@ -50,7 +50,7 @@ Two more rules keep the apps small:
 | 9 | Query lab | Data engineering | A real editor: syntax highlighting, completion, and a squiggle on the failing line. | CodeMirror 6 | planned |
 | 10 | [Big grid](apps/big-grid) | BI and tabular | All million rows scrollable, with filter and sort in the browser. | TanStack Virtual | done |
 | 11 | Fleet board | Operations | Drag and drop that commits optimistically: the card moves before the server confirms. | dnd-kit | planned |
-| 12 | Churn monitor | ML monitoring | Move the decision threshold and every metric updates with no round trip. | visx | planned |
+| 12 | [Churn monitor](apps/churn-monitor) | ML monitoring | Move the decision threshold and every metric updates with no round trip. | visx | done |
 | 13 | Supply flow | Supply chain | States animate into each other instead of flickering. | d3-sankey + motion | planned |
 | 14 | Text lens | NLP | Token level highlighting and selection across a long document. | CodeMirror decorations | planned |
 | 15 | Survey builder | Forms and data entry | A multi step form with validation and undo, without a reactive per field. | react-hook-form + zod | planned |
@@ -76,7 +76,7 @@ Which app exercises which part of shinyreact. A row reading
 | `useShinyInputValue` | 1 | linked-brush |
 | `useSetShinyInput` | 2 | market-candles, fleet-board |
 | `useShinyOutputValue` | 14 | cell-atlas, market-candles, genome-tracks, slide-viewer, city-density, protein-view, linked-brush, query-lab, big-grid, fleet-board, churn-monitor, supply-flow, text-lens, survey-builder |
-| `useShinyOutputStatus` | 7 | cell-atlas, market-candles, city-density, protein-view, linked-brush, big-grid, text-lens |
+| `useShinyOutputStatus` | 8 | cell-atlas, market-candles, city-density, protein-view, linked-brush, big-grid, churn-monitor, text-lens |
 | `useShinyOutputError` | 1 | query-lab |
 | `useShinyMessageHandler` | 1 | sensor-stream |
 | `useShinyInitialized` | 15 | cell-atlas, market-candles, sensor-stream, genome-tracks, slide-viewer, city-density, protein-view, linked-brush, query-lab, big-grid, fleet-board, churn-monitor, supply-flow, text-lens, survey-builder |
