@@ -33,19 +33,15 @@ site:
   # The footer renders this list as it stands. The two shinyreact URLs are the
   # ones the packages declare for themselves, in the npm package homepage and
   # the PyPI project URLs, rather than anything guessed from the name.
+  # The docs landing page rather than the per language references: it links
+  # to the Python, R and JavaScript ones itself, so one link covers all three.
   links:
-    - label: "Source on GitHub"
+    - label: "Source for this gallery"
       url: "https://github.com/samuelbharti/shinyreact-showcase"
-    - label: "Shiny React"
+    - label: "Shiny React on GitHub"
       url: "https://github.com/posit-dev/shinyreact"
-    - label: "Shiny React docs, Python"
-      url: "https://posit-dev.github.io/shinyreact/py/"
-    - label: "Shiny React docs, JavaScript"
-      url: "https://posit-dev.github.io/shinyreact/js/"
-    - label: "Shiny for Python"
-      url: "https://shiny.posit.co/py/"
-    - label: "Shiny for R"
-      url: "https://shiny.posit.co/r/"
+    - label: "Shiny React documentation"
+      url: "https://posit-dev.github.io/shinyreact/"
 
 # The families the cards are grouped under on the landing page, in the order
 # they appear. Life sciences first, because that is where this pattern pays

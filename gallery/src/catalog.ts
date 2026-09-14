@@ -61,6 +61,33 @@ const NO_SITE: Site = {
   links: [],
 };
 
+/**
+ * Where this bundle is being served from.
+ *
+ * page_react() publishes www/ as a Shiny html dependency, so the bundle and
+ * anything beside it live under /lib/<name>-<hash>/ rather than at the page
+ * URL. A thumbnail referenced as "thumbs/x.jpg" would resolve against the
+ * page and 404. The Python gallery mounts apps at /app/<slug>/ and the R one
+ * serves everything from the root, so there is no one prefix to hard code
+ * either: the only thing that knows the answer is the script tag itself.
+ */
+function bundleBase(): string {
+  const current = document.currentScript as HTMLScriptElement | null;
+  const src =
+    current?.src ||
+    [...document.querySelectorAll("script[src]")]
+      .map((tag) => (tag as HTMLScriptElement).src)
+      .find((url) => /\/ui\.js(\?|$)/.test(url));
+  return src ? src.replace(/[^/]*$/, "") : "";
+}
+
+const BASE = bundleBase();
+
+/** A file shipped beside the bundle in www/. */
+export function assetUrl(path: string): string {
+  return BASE + path;
+}
+
 export function readCatalog(doc: Document = document): Catalog {
   const tag = doc.getElementById("shinyreact-catalog");
   if (!tag?.textContent) {
