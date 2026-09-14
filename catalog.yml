@@ -209,16 +209,16 @@ apps:
     title: "Supply flow"
     domain: "Supply chain"
     milestone: M3
-    status: planned
+    status: done
     deploy: gallery
     languages: [py, r]
     library: "d3-sankey + motion"
     compare: false
-    features: [useShinyInput, useShinyOutputValue, bookmarking, useShinyInitialized]
+    features: [useShinyInput, useShinyOutputValue, useShinyOutputStatus, bookmarking, useShinyInitialized]
     claim: "States animate into each other instead of flickering."
     plain_shiny: "The output is torn down and rebuilt, so the diagram blinks on every change."
     this_app: "React keeps the nodes mounted and interpolates between layouts. The view is bookmarkable."
-    blurb: "A sankey diagram that morphs between scenarios, with a URL you can share."
+    blurb: "A supply network that reroutes around a closed port or a lost factory line, morphing between scenarios instead of blinking, with a URL you can share."
 
   - slug: text-lens
     title: "Text lens"

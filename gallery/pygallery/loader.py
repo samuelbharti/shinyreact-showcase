@@ -71,6 +71,18 @@ class LazyApp:
         # Built here rather than reusing module.app, so the gallery can add
         # the back link and pin src_dir to an absolute path. The app's own
         # ReactApp() call is for running it standalone.
+        #
+        # Bookmarking is turned on only for the apps that say they use it, in
+        # catalog.yml. It costs nothing for the rest, but a feature that is on
+        # everywhere is a feature nobody can find in the code, and the catalog
+        # is where this repo records which app demonstrates what.
+        #
+        # The ui below is a function of the request, which is what URL
+        # bookmarking needs: the restore payload is read when the page is
+        # built, so a page built once would carry whatever was true at
+        # startup forever.
+        store = "url" if "bookmarking" in self._entry.features else "disable"
+
         return ReactApp(
             server,
             ui=lambda _request: page_react(
@@ -79,6 +91,7 @@ class LazyApp:
                 src_dir=directory / "www",
                 title=self._entry.title,
             ),
+            bookmark_store=store,
         )
 
 
