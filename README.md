@@ -1,16 +1,15 @@
 # shinyreact showcase
 
-Fifteen small Shiny apps whose screen is built in React. Each app proves one
-thing that Shiny React makes possible and plain Shiny does not.
+Shiny apps I've built to see what the ui.tsx pattern is actually worth: the
+server keeps the reactive computation, and a React client owns the screen.
+Each one picks a single thing plain Shiny does badly, then puts a number on
+what the split buys. The table below says which are built.
 
-This is not a collection of large dashboards. Every app fits on one screen and
-answers one question: what can you build when the browser owns the interface
-and Shiny only sends data?
-
-[Shiny React](https://posit-dev.github.io/shinyreact/) is a bridge between a
-Shiny server and a React front end. The server holds reactive computation and
-returns JSON. A React client that you write holds all of the interface. The two
-meet at named inputs and outputs.
+[Shiny React](https://posit-dev.github.io/shinyreact/) joins the two halves.
+The server returns JSON through `reactive_output()`, the client reads it
+through hooks, and the two meet at named inputs and outputs. Everything you
+touch on the page belongs to React, so panning a plot or dragging a slider
+never has to ask the server for permission.
 
 ## The rule every app follows
 
