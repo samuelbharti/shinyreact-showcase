@@ -11,6 +11,7 @@ What the gallery does, in plain English:
 """
 
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -19,7 +20,12 @@ import pytest
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "gallery"))
 
-from pygallery.registry import read_registry  # noqa: E402
+from pygallery.registry import (  # noqa: E402
+    read_catalog,
+    read_groups,
+    read_registry,
+    read_site,
+)
 from pygallery.router import build_gallery_app  # noqa: E402
 
 
@@ -186,3 +192,53 @@ def _write_catalog(root: Path, apps: list[dict]) -> None:
                 "", encoding="utf-8"
             )
     (root / "catalog.yml").write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+def test_every_app_names_a_group_the_landing_page_knows():
+    """The landing page draws cards under group headings and nothing else.
+
+    An app whose group is a typo would be sorted into a family that does not
+    exist, and the client would have to invent a home for it. catalog.yml is
+    hand edited, so this is worth an assertion rather than a convention.
+    """
+    root = Path(__file__).resolve().parents[2]
+    known = {group["id"] for group in read_groups(root)}
+    assert known, "catalog.yml lists no groups"
+
+    catalog = read_catalog(root)
+    for app in catalog["apps"]:
+        assert app.get("group") in known, (app["slug"], app.get("group"))
+
+
+def test_life_sciences_is_the_first_group():
+    """Biology leads the page. It is the first thing a reader sees, and it is
+    where the largest payloads and the heaviest plots are."""
+    root = Path(__file__).resolve().parents[2]
+    assert read_groups(root)[0]["id"] == "life-sciences"
+
+
+def test_every_group_has_a_colour_the_client_can_use():
+    root = Path(__file__).resolve().parents[2]
+    for group in read_groups(root):
+        assert group["title"]
+        assert re.fullmatch(r"#[0-9a-fA-F]{6}", group["colour"]), group
+
+
+def test_the_footer_knows_who_made_this():
+    """The client hard codes no name or link. Both come from catalog.yml."""
+    root = Path(__file__).resolve().parents[2]
+    site = read_site(root)
+    assert site["author"]
+    assert site["repoUrl"].startswith("https://")
+    assert site["license"]
+
+
+def test_the_landing_page_carries_the_groups_and_the_footer(client):
+    payload = _catalog_from(client.get("/").text)
+
+    assert payload["groups"][0]["id"] == "life-sciences"
+    assert payload["site"]["author"]
+    # Every card's group is one the page was also given.
+    known = {group["id"] for group in payload["groups"]}
+    for card in payload["apps"]:
+        assert card["group"] in known

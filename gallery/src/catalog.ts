@@ -13,6 +13,8 @@ export type Entry = {
   plainShiny: string;
   thisApp: string;
   domain: string;
+  /** Which family of cards this one sits under. Matches a Group id. */
+  group: string;
   library: string;
   features: string[];
   compare: boolean;
@@ -22,14 +24,82 @@ export type Entry = {
   other: string;
 };
 
+export type Group = {
+  id: string;
+  title: string;
+  note: string;
+  /** The accent this family is drawn in. Comes from catalog.yml. */
+  colour: string;
+};
+
+export type Site = {
+  title: string;
+  author: string;
+  authorUrl: string;
+  repoUrl: string;
+  license: string;
+};
+
 export type Catalog = {
   /** "Python" or "R". Which server is serving this page. */
   language: string;
   apps: Entry[];
+  groups: Group[];
+  site: Site;
+};
+
+const NO_SITE: Site = {
+  title: "Shiny React showcase",
+  author: "",
+  authorUrl: "",
+  repoUrl: "",
+  license: "",
 };
 
 export function readCatalog(doc: Document = document): Catalog {
   const tag = doc.getElementById("shinyreact-catalog");
-  if (!tag?.textContent) return { language: "", apps: [] };
-  return JSON.parse(tag.textContent) as Catalog;
+  if (!tag?.textContent) {
+    return { language: "", apps: [], groups: [], site: NO_SITE };
+  }
+
+  const parsed = JSON.parse(tag.textContent) as Partial<Catalog>;
+  return {
+    language: parsed.language ?? "",
+    apps: parsed.apps ?? [],
+    groups: parsed.groups ?? [],
+    site: parsed.site ?? NO_SITE,
+  };
+}
+
+/**
+ * The apps, in the order the groups are listed, dropping empty groups.
+ *
+ * A group with nothing in it is not drawn. catalog.yml names all four
+ * families from the start, and the gallery only serves the apps that have
+ * actually been built, so an empty heading would otherwise sit on the page
+ * advertising work that is not there.
+ */
+export function byGroup(
+  apps: Entry[],
+  groups: Group[],
+): { group: Group; apps: Entry[] }[] {
+  const sections = groups
+    .map((group) => ({
+      group,
+      apps: apps.filter((entry) => entry.group === group.id),
+    }))
+    .filter((section) => section.apps.length > 0);
+
+  // Anything whose group is missing from the list still has to appear, or a
+  // typo in catalog.yml would silently hide an app.
+  const placed = new Set(groups.map((group) => group.id));
+  const orphans = apps.filter((entry) => !placed.has(entry.group));
+  if (orphans.length > 0) {
+    sections.push({
+      group: { id: "other", title: "Everything else", note: "", colour: "#5c6370" },
+      apps: orphans,
+    });
+  }
+
+  return sections;
 }
