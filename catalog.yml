@@ -104,16 +104,16 @@ apps:
     title: "City density"
     domain: "Geospatial"
     milestone: M2
-    status: planned
+    status: done
     deploy: gallery
     languages: [py, r]
-    library: "deck.gl + maplibre-gl"
+    library: "deck.gl"
     compare: false
     features: [useShinyInput, useShinyOutputValue, useShinyOutputStatus, useShinyInitialized]
-    claim: "A million points as a GPU hex layer, rebinned on the client while zooming."
-    plain_shiny: "leaflet clusters give up well before a million markers."
-    this_app: "One typed array to the GPU. Aggregation happens per frame, locally."
-    blurb: "A million geocoded points, rebinned on the GPU as you zoom."
+    claim: "Half a million trips, rebinned into hexagons on every zoom, with no server call."
+    plain_shiny: "leaflet clusters give up well before half a million markers."
+    this_app: "One typed array to the GPU. Binning happens per zoom, locally."
+    blurb: "Half a million taxi trips, rebinned into hexagons in the browser as you zoom."
 
   - slug: protein-view
     title: "Protein view"

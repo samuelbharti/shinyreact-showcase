@@ -8,5 +8,5 @@
 
 numpy>=2.0  # cell-atlas
 pyyaml>=6.0  # gallery
-shiny>=1.8.0  # gallery, cell-atlas, genome-tracks, sensor-stream
-shinyreact>=0.1.0  # gallery, cell-atlas, genome-tracks, sensor-stream
+shiny>=1.8.0  # gallery, cell-atlas, city-density, genome-tracks, sensor-stream
+shinyreact>=0.1.0  # gallery, cell-atlas, city-density, genome-tracks, sensor-stream
