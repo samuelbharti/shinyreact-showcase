@@ -1,0 +1,22 @@
+{
+  "_comment": [
+    "The keys one gallery card carries. Both the Python and the R gallery are",
+    "checked against this, because the landing page bundle is shared and a",
+    "key missing on one side would show up as an empty card on one",
+    "deployment only. Change it on purpose, in both languages, or not at all."
+  ],
+  "keys": [
+    "slug",
+    "title",
+    "blurb",
+    "claim",
+    "plainShiny",
+    "thisApp",
+    "domain",
+    "library",
+    "features",
+    "compare",
+    "href",
+    "other"
+  ]
+}

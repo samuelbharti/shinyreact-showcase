@@ -1,0 +1,193 @@
+:root {
+  --fg: #16181d;
+  --bg: #ffffff;
+  --card: #ffffff;
+  --muted: #5c6370;
+  --accent: #2f6fed;
+  --line: #e3e6ea;
+  --soft: #f7f8fa;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--soft);
+  color: var(--fg);
+  font: 15px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+.gallery {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 32px 16px 64px;
+}
+
+header h1 {
+  font-size: 1.8rem;
+  margin: 0 0 6px;
+}
+
+.lead {
+  margin: 0;
+  max-width: 62ch;
+  color: var(--muted);
+}
+
+.served {
+  margin: 10px 0 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.filters {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin: 24px 0 18px;
+  padding: 10px 12px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.filters label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+}
+
+.filters .search {
+  flex: 1;
+  min-width: 200px;
+}
+
+.filters input[type="search"] {
+  flex: 1;
+  min-width: 0;
+  padding: 5px 8px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  font: inherit;
+}
+
+.filters select {
+  padding: 4px 6px;
+  font: inherit;
+}
+
+.count {
+  margin-left: auto;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.cards {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.card-link {
+  display: block;
+  padding: 16px 16px 10px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.card-link:hover h2 {
+  color: var(--accent);
+}
+
+.domain {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+}
+
+.card h2 {
+  font-size: 1.1rem;
+  margin: 4px 0 6px;
+}
+
+.blurb {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.claim {
+  margin: 0;
+  padding: 0 16px 12px;
+  font-size: 0.85rem;
+}
+
+.claim dt {
+  color: var(--muted);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-top: 8px;
+}
+
+.claim dd {
+  margin: 2px 0 0;
+}
+
+.card footer {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 10px 16px;
+  border-top: 1px solid var(--line);
+  background: var(--soft);
+  font-size: 0.8rem;
+}
+
+.library {
+  color: var(--muted);
+  font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+}
+
+.badge {
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: #e8f0ff;
+  color: #23489c;
+}
+
+.other {
+  margin-left: auto;
+  color: var(--accent);
+}
+
+.empty {
+  color: var(--muted);
+}
+
+code {
+  font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 1px 5px;
+}

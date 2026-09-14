@@ -29,7 +29,7 @@ apps:
     title: "Cell atlas"
     domain: "Single cell biology"
     milestone: M1
-    status: building
+    status: done
     deploy: gallery
     languages: [py, r]
     library: regl-scatterplot
