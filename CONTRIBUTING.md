@@ -25,8 +25,9 @@ That is not a judgement about the app. It just does not show anything.
 ## Apps stay small
 
 1. One screen per app. No tabs and no wizards. The gallery is the navigation.
-2. No downloads at run time and no API keys. Ship a small data file under
-   `data/`, and the script that made it under `tools/gen-data/`.
+2. No downloads at run time and no API keys. Either compute the data from the
+   row number, which most apps here do, or ship a small file under `data/`
+   with the script that made it under `tools/gen-data/`.
 
 Rule 2 exists because one process serves all 15 apps. An app that reaches the
 network on startup breaks the gallery for everyone.

@@ -18,6 +18,10 @@ renv/staging/
 # Local notes, plans, screenshots. Never committed.
 docs/local/
 
+# Deployment records. rsconnect writes the account name, the app id and the
+# content URL in here after a deploy, none of which belongs in a public repo.
+rsconnect/
+
 # Secrets. The pre-commit hook blocks these too.
 .env
 .env.*

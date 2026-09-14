@@ -150,7 +150,7 @@ Rscript -e "shiny::runApp('apps/supply-flow')"
 
 ```bash
 npx vitest run apps/supply-flow                              # 27 client
-uv run pytest apps/supply-flow                               # 20 Python
+uv run pytest apps/supply-flow                               # 19 Python
 Rscript -e "shiny::runTests('apps/supply-flow', assert = TRUE)"  # 517 R
 ```
 
