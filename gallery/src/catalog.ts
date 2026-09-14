@@ -32,12 +32,16 @@ export type Group = {
   colour: string;
 };
 
+export type SiteLink = { label: string; url: string };
+
 export type Site = {
   title: string;
   author: string;
   authorUrl: string;
   repoUrl: string;
   license: string;
+  /** The footer column, in order. Comes from catalog.yml, not from here. */
+  links: SiteLink[];
 };
 
 export type Catalog = {
@@ -54,6 +58,7 @@ const NO_SITE: Site = {
   authorUrl: "",
   repoUrl: "",
   license: "",
+  links: [],
 };
 
 export function readCatalog(doc: Document = document): Catalog {
@@ -67,7 +72,7 @@ export function readCatalog(doc: Document = document): Catalog {
     language: parsed.language ?? "",
     apps: parsed.apps ?? [],
     groups: parsed.groups ?? [],
-    site: parsed.site ?? NO_SITE,
+    site: { ...NO_SITE, ...(parsed.site ?? {}) },
   };
 }
 

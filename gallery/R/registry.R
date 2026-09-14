@@ -68,7 +68,10 @@ read_registry <- function(root = ROOT) {
       author = site$author %||% "",
       authorUrl = site$author_url %||% "",
       repoUrl = site$repo_url %||% "",
-      license = site$license %||% ""
+      license = site$license %||% "",
+      links = lapply(site$links %||% list(), function(link) {
+        list(label = link$label %||% "", url = link$url %||% "")
+      })
     )
   )
 }

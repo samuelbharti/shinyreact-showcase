@@ -129,6 +129,11 @@ def read_site(root: Path) -> dict:
         "authorUrl": site.get("author_url", ""),
         "repoUrl": site.get("repo_url", ""),
         "license": site.get("license", ""),
+        "links": [
+            {"label": link.get("label", ""), "url": link.get("url", "")}
+            for link in site.get("links") or []
+            if link.get("url")
+        ],
     }
 
 

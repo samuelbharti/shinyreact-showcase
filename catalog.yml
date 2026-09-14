@@ -30,6 +30,22 @@ site:
   license: "MIT"
   py_url: ""
   r_url: ""
+  # The footer renders this list as it stands. The two shinyreact URLs are the
+  # ones the packages declare for themselves, in the npm package homepage and
+  # the PyPI project URLs, rather than anything guessed from the name.
+  links:
+    - label: "Source on GitHub"
+      url: "https://github.com/samuelbharti/shinyreact-showcase"
+    - label: "Shiny React"
+      url: "https://github.com/posit-dev/shinyreact"
+    - label: "Shiny React docs, Python"
+      url: "https://posit-dev.github.io/shinyreact/py/"
+    - label: "Shiny React docs, JavaScript"
+      url: "https://posit-dev.github.io/shinyreact/js/"
+    - label: "Shiny for Python"
+      url: "https://shiny.posit.co/py/"
+    - label: "Shiny for R"
+      url: "https://shiny.posit.co/r/"
 
 # The families the cards are grouped under on the landing page, in the order
 # they appear. Life sciences first, because that is where this pattern pays

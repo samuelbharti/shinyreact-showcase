@@ -143,7 +143,7 @@ function Card({ entry }: { entry: Entry }) {
 }
 
 function Footer() {
-  const { author, authorUrl, repoUrl, license } = CATALOG.site;
+  const { author, authorUrl, license, links } = CATALOG.site;
   const year = new Date().getFullYear();
 
   return (
@@ -168,22 +168,11 @@ function Footer() {
         <div className="footer-links">
           <h2>Links</h2>
           <ul>
-            {repoUrl ? (
-              <li>
-                <a href={repoUrl}>Source on GitHub</a>
+            {links.map((link) => (
+              <li key={link.url}>
+                <a href={link.url}>{link.label}</a>
               </li>
-            ) : null}
-            <li>
-              <a href="https://posit-dev.github.io/shiny-react/">
-                Shiny React documentation
-              </a>
-            </li>
-            <li>
-              <a href="https://shiny.posit.co/py/">Shiny for Python</a>
-            </li>
-            <li>
-              <a href="https://shiny.posit.co/r/">Shiny for R</a>
-            </li>
+            ))}
           </ul>
         </div>
       </div>
