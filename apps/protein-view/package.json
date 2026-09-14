@@ -1,0 +1,14 @@
+{
+  "name": "protein-view",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite build --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --root ../.. apps/protein-view"
+  },
+  "dependencies": {
+    "3dmol": "^2.5.5"
+  }
+}

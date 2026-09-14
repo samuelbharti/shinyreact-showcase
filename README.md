@@ -35,7 +35,7 @@ Two more rules keep the apps small:
 
 <!-- catalog:start -->
 
-15 apps, 5 built so far.
+15 apps, 6 built so far.
 
 | # | App | Domain | The claim | Library | Status |
 | --- | --- | --- | --- | --- | --- |
@@ -45,7 +45,7 @@ Two more rules keep the apps small:
 | 4 | [Genome tracks](apps/genome-tracks) | Genomics | Drag the locus across a large interval set with no server call. | canvas + d3-scale | done |
 | 5 | [Slide viewer](apps/slide-viewer) | Pathology imaging | Gigapixel deep zoom, which a server rendered image cannot do at all. | OpenSeadragon | done |
 | 6 | [City density](apps/city-density) | Geospatial | Half a million trips, rebinned into hexagons on every zoom, with no server call. | deck.gl | done |
-| 7 | Protein view | Structural biology | Real 3D orbit and style switching, with no htmlwidget to write. | 3Dmol.js | planned |
+| 7 | [Protein view](apps/protein-view) | Structural biology | Real 3D orbit and style switching, with no htmlwidget to write. | 3Dmol.js | done |
 | 8 | Linked brush | Statistics and EDA | Four charts brush each other instantly, all on the client. | visx | planned |
 | 9 | Query lab | Data engineering | A real editor: syntax highlighting, completion, and a squiggle on the failing line. | CodeMirror 6 | planned |
 | 10 | Big grid | BI and tabular | A million rows, with sort and filter that feel instant. | TanStack Table + Virtual | planned |
@@ -76,7 +76,7 @@ Which app exercises which part of shinyreact. A row reading
 | `useShinyInputValue` | 1 | linked-brush |
 | `useSetShinyInput` | 1 | fleet-board |
 | `useShinyOutputValue` | 14 | cell-atlas, market-candles, genome-tracks, slide-viewer, city-density, protein-view, linked-brush, query-lab, big-grid, fleet-board, churn-monitor, supply-flow, text-lens, survey-builder |
-| `useShinyOutputStatus` | 5 | cell-atlas, market-candles, city-density, big-grid, text-lens |
+| `useShinyOutputStatus` | 6 | cell-atlas, market-candles, city-density, protein-view, big-grid, text-lens |
 | `useShinyOutputError` | 1 | query-lab |
 | `useShinyMessageHandler` | 1 | sensor-stream |
 | `useShinyInitialized` | 15 | cell-atlas, market-candles, sensor-stream, genome-tracks, slide-viewer, city-density, protein-view, linked-brush, query-lab, big-grid, fleet-board, churn-monitor, supply-flow, text-lens, survey-builder |
