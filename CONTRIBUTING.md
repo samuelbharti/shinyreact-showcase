@@ -76,7 +76,7 @@ Copy `templates/app/vite.config.ts` without changing it. It leaves React out of
 the bundle so your app shares the React instance that owns the hooks.
 
 If you bundle your own React, every hook returns nothing and no error appears
-anywhere. This is the most common way to lose an afternoon on a Shiny React
+anywhere. This is the most common way to lose an afternoon on a shinyreact
 app.
 
 Read the hooks off `window.shinyreact` inside the component, not at the top of

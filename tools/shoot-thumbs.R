@@ -114,7 +114,7 @@ on.exit(try(session$close(), silent = TRUE), add = TRUE)
 # navigate(wait_ = TRUE) already waits for the navigation to commit, and on a
 # page that loads quickly the load event can fire inside that call. Waiting
 # for it again then sits there until the timeout and kills the run for no
-# reason. It is a nicety in any case: what actually makes a Shiny React app
+# reason. It is a nicety in any case: what actually makes a shinyreact app
 # ready is the sleep below, after the websocket has connected and the first
 # outputs have arrived.
 invisible(session$Page$navigate(url, wait_ = TRUE))

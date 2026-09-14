@@ -53,7 +53,7 @@ export type Catalog = {
 };
 
 const NO_SITE: Site = {
-  title: "Shiny React showcase",
+  title: "shinyreact showcase",
   author: "",
   authorUrl: "",
   repoUrl: "",
