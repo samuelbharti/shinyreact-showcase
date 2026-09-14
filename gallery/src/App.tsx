@@ -21,48 +21,48 @@ export default function App() {
   }, [query]);
 
   const sections = useMemo(() => byGroup(shown, CATALOG.groups), [shown]);
-  const compared = CATALOG.apps.filter((entry) => entry.compare).length;
+
+  // One run of numbers down the whole page rather than restarting per group.
+  // It is an index, and an index counts from one to the end.
+  let counter = 0;
 
   return (
     <div className="page">
       <main className="gallery">
         <header>
-          <p className="kicker">The ui.tsx pattern</p>
           <h1>{CATALOG.site.title}</h1>
-          <p className="lead">
-            React draws the screen. Shiny does the data work.
-          </p>
+          <p className="lead">React draws the screen. Shiny does the data work.</p>
           <p className="sub">
-            Every app here picks one thing plain Shiny handles badly, and puts
-            the measurement next to it: round trips not made, points drawn,
-            milliseconds spent. {compared > 0 ? spellOut(compared) : "Some"} of
-            them run the plain Shiny version on the same page, so you can watch
-            both and read the counter.
-          </p>
-          <p className="sub">
-            The same TSX bundle runs on a Python server and an R one. Nothing in
-            the client knows which it is talking to.
+            Every app here takes one thing plain Shiny handles badly and puts
+            the measurement beside it: round trips not made, points drawn,
+            milliseconds spent. The same TSX bundle runs against a Python server
+            and an R one, and nothing in the browser knows which it is talking
+            to.
           </p>
         </header>
 
-        <div className="filters">
-          <label className="search">
-            <span>Search</span>
+        <div className="bar">
+          <span className="bar-fact">
+            <b>{CATALOG.apps.length}</b> apps
+          </span>
+          <span className="bar-fact">
+            <b>{CATALOG.apps.filter((entry) => entry.compare).length}</b> run both
+            paths side by side
+          </span>
+          {CATALOG.language ? (
+            <span className="bar-fact">
+              served by <b>{CATALOG.language}</b>
+            </span>
+          ) : null}
+          <label className="find">
+            <span className="sr-only">Search</span>
             <input
               type="search"
               value={query}
-              placeholder="claim, library, domain"
+              placeholder="Filter by claim, library or domain"
               onChange={(event) => setQuery(event.target.value)}
             />
           </label>
-          <span className="count">
-            {shown.length} of {CATALOG.apps.length} apps
-          </span>
-          {CATALOG.language ? (
-            <span className="served">
-              served by <strong>{CATALOG.language}</strong>
-            </span>
-          ) : null}
         </div>
 
         {CATALOG.apps.length === 0 ? (
@@ -71,11 +71,22 @@ export default function App() {
             one.
           </p>
         ) : sections.length === 0 ? (
-          <p className="empty">Nothing matches {JSON.stringify(query)}.</p>
+          <p className="empty">
+            Nothing matches <b>{query.trim()}</b>.
+          </p>
         ) : (
-          sections.map((section) => (
-            <Section key={section.group.id} group={section.group} apps={section.apps} />
-          ))
+          sections.map((section) => {
+            const from = counter;
+            counter += section.apps.length;
+            return (
+              <Section
+                key={section.group.id}
+                group={section.group}
+                apps={section.apps}
+                startAt={from}
+              />
+            );
+          })
         )}
       </main>
 
@@ -84,60 +95,75 @@ export default function App() {
   );
 }
 
-function Section({ group, apps }: { group: Group; apps: Entry[] }) {
-  // The accent travels as a custom property, so every card underneath picks
-  // it up without the colour being repeated per card.
+function Section({
+  group,
+  apps,
+  startAt,
+}: {
+  group: Group;
+  apps: Entry[];
+  startAt: number;
+}) {
+  // The accent travels as a custom property, so nothing underneath repeats the
+  // colour and a group can be recoloured in catalog.yml alone.
   const accent = { "--accent": group.colour } as CSSProperties;
 
   return (
     <section className="group" data-group={group.id} style={accent}>
       <div className="group-head">
         <h2>{group.title}</h2>
-        {group.note ? <p>{group.note}</p> : null}
+        <span className="group-rule" aria-hidden="true" />
         <span className="group-count">{apps.length}</span>
       </div>
+      {group.note ? <p className="group-note">{group.note}</p> : null}
 
-      <ul className="cards">
-        {apps.map((entry) => (
-          <Card key={entry.slug} entry={entry} />
+      <ol className="entries">
+        {apps.map((entry, at) => (
+          <Row key={entry.slug} entry={entry} number={startAt + at + 1} />
         ))}
-      </ul>
+      </ol>
     </section>
   );
 }
 
-function Card({ entry }: { entry: Entry }) {
+function Row({ entry, number }: { entry: Entry; number: number }) {
   return (
-    <li className="card" data-slug={entry.slug}>
-      {/* A real link, not client side navigation. Each app is its own Shiny
-          session with its own bundle, so moving into one is a page load. */}
-      <a className="card-link" href={entry.href}>
-        <span className="domain">{entry.domain}</span>
+    <li className="entry" data-slug={entry.slug}>
+      <span className="num" aria-hidden="true">
+        {String(number).padStart(2, "0")}
+      </span>
+
+      <div className="entry-body">
         <h3>
-          {entry.title}
-          <span className="go" aria-hidden="true">
-            &rarr;
-          </span>
+          {/* Stretched: the anchor is small, but its ::after covers the whole
+              row, so the row is one click target without the other links
+              sitting inside an anchor, which would not be valid. */}
+          <a className="entry-link" href={entry.href}>
+            {entry.title}
+          </a>
         </h3>
         <p className="blurb">{entry.blurb}</p>
-      </a>
 
-      <dl className="claim">
-        <dt>Does</dt>
-        <dd>{entry.claim}</dd>
-        <dt>Plain Shiny</dt>
-        <dd>{entry.plainShiny}</dd>
-      </dl>
+        <p className="line does">
+          <span className="tag">Does</span>
+          {entry.claim}
+        </p>
+        <p className="line instead">
+          <span className="tag">Plain Shiny</span>
+          {entry.plainShiny}
+        </p>
+      </div>
 
-      <footer>
+      <div className="entry-meta">
+        <span className="domain">{entry.domain}</span>
         <span className="library">{entry.library}</span>
-        {entry.compare ? <span className="badge">side by side</span> : null}
+        {entry.compare ? <span className="both">side by side</span> : null}
         {entry.other ? (
           <a className="other" href={entry.other}>
             also in {CATALOG.language === "Python" ? "R" : "Python"}
           </a>
         ) : null}
-      </footer>
+      </div>
     </li>
   );
 }
@@ -150,18 +176,18 @@ function Footer() {
     <footer className="site-footer">
       <div className="footer-inner">
         <div className="footer-about">
-          <h2>About this gallery</h2>
+          <h2>What this is</h2>
           <p>
             Each app is a Shiny server that sends data and a React client that
             draws it. The server holds the reactive computation and returns
-            JSON; the browser owns everything you touch. That split is the
-            whole idea, and each card says what it buys.
+            JSON. The browser owns everything you touch. That split is the whole
+            idea, and every entry above says what it buys.
           </p>
           <p>
-            Nothing here downloads anything at run time and nothing needs a key.
+            Nothing downloads anything at run time and nothing needs a key.
             Every app builds its own data from a hash of the row number, so the
-            Python server, the R server and the browser all agree on it down to
-            the last digit.
+            Python server, the R server and the browser agree on it to the last
+            digit.
           </p>
         </div>
 
@@ -178,22 +204,10 @@ function Footer() {
       </div>
 
       <div className="footer-base">
-        <span>
-          Built by{" "}
-          {authorUrl ? <a href={authorUrl}>{author}</a> : <strong>{author}</strong>}
-          {license ? ` · ${license} licensed` : ""} · {year}
-        </span>
-        <span className="footer-note">
-          Shiny React is a Posit project. This gallery is not affiliated with
-          Posit.
-        </span>
+        Built by{" "}
+        {authorUrl ? <a href={authorUrl}>{author}</a> : <strong>{author}</strong>}
+        {license ? ` · ${license}` : ""} · {year}
       </div>
     </footer>
   );
-}
-
-/** Small numbers read better as words in a sentence. */
-function spellOut(value: number): string {
-  const words = ["Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven"];
-  return words[value] ?? String(value);
 }

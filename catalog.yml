@@ -55,7 +55,7 @@ site:
 # apps do not leave an empty heading on the page.
 groups:
   - id: life-sciences
-    title: "Life sciences"
+    title: "Computational biology and life sciences"
     note: "Large measurements, and pictures you have to move around inside."
     colour: "#0f7a4a"
   - id: analytics
