@@ -1,0 +1,118 @@
+name: CI
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main, dev]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  client:
+    name: Client (typecheck, tests, bundle check)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck --workspaces --if-present
+
+      - name: Client tests
+        run: npx vitest run
+
+      # The one check that keeps the committed bundles honest. Connect Cloud
+      # runs no Node at deploy time, so www/ui.js is committed. This rebuilds
+      # everything and fails when what is committed is not what the source
+      # builds.
+      - name: Committed bundles match their source
+        run: node tools/check-built.mjs
+
+  generated:
+    name: Generated files are current
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - run: npm ci
+
+      - name: README catalog tables match catalog.yml
+        run: node tools/render-catalog.mjs --check
+
+      - name: requirements.txt is the union of the app files
+        run: node tools/sync-requirements.mjs --check
+
+  python:
+    name: Python (lint, tests)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Install
+        run: |
+          uv venv
+          uv pip install -r requirements.txt
+          uv pip install pytest ruff httpx
+
+      - name: Lint
+        run: |
+          uv run ruff check .
+          uv run ruff format --check .
+
+      - name: Tests
+        run: uv run pytest
+
+  r:
+    name: R (lint, tests)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          # shinyreact is not on CRAN yet, so it comes from the repo subdir.
+          packages: |
+            any::shiny
+            any::testthat
+            github::posit-dev/shinyreact/pkg-r
+
+      - uses: posit-dev/setup-air@v1
+
+      - name: Format check
+        run: air format --check .
+
+      - name: Tests
+        shell: Rscript {0}
+        run: |
+          apps <- list.dirs("apps", recursive = FALSE)
+          apps <- apps[file.exists(file.path(apps, "tests", "testthat.R"))]
+          if (length(apps) == 0) {
+            cat("No R tests yet.\n")
+          } else {
+            for (app in apps) {
+              cat("==", app, "==\n")
+              shiny::runTests(app, assert = TRUE)
+            }
+          }

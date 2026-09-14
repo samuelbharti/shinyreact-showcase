@@ -1,0 +1,34 @@
+# Node
+node_modules/
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+
+# R
+.Rproj.user/
+.Rhistory
+.RData
+renv/library/
+renv/staging/
+
+# Local notes, plans, screenshots. Never committed.
+docs/local/
+
+# Secrets. The pre-commit hook blocks these too.
+.env
+.env.*
+.Renviron
+.Renviron.*
+
+# OS and editor
+.DS_Store
+Thumbs.db
+*.log
+
+# Build output is NOT ignored. Connect Cloud has no Node at deploy time, so
+# every app's www/ui.js and www/ui.css are committed on purpose. CI rebuilds
+# them and fails the PR when the committed file does not match the source.

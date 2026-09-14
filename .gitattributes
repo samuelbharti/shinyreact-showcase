@@ -1,0 +1,18 @@
+# One line ending everywhere. The repo is edited on Windows and built in CI on
+# Linux, and a committed bundle that differs only by CRLF would fail the
+# check-built job for no real reason.
+* text=auto eol=lf
+
+# Vite output. Marked generated so GitHub collapses it in a diff and leaves it
+# out of the language stats. It is still committed, and still checked.
+**/www/ui.js linguist-generated -diff
+**/www/ui.css linguist-generated -diff
+package-lock.json linguist-generated -diff
+
+# Binary data, never diffed or line-ending converted.
+*.parquet binary
+*.rds binary
+*.png binary
+*.jpg binary
+*.f32 binary
+*.i16 binary

@@ -1,0 +1,34 @@
+{
+  "name": "shinyreact-showcase",
+  "private": true,
+  "type": "module",
+  "description": "A gallery of small Shiny apps whose UI is React, each proving one thing Shiny React makes possible.",
+  "license": "MIT",
+  "workspaces": [
+    "gallery",
+    "apps/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "vitest run",
+    "check-built": "node tools/check-built.mjs",
+    "catalog": "node tools/render-catalog.mjs",
+    "new-app": "node tools/new-app.mjs"
+  },
+  "devDependencies": {
+    "@posit-dev/shinyreact": "^0.1.1",
+    "@testing-library/react": "^16.1.0",
+    "@types/node": "^22.10.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "js-yaml": "^4.1.0",
+    "jsdom": "^25.0.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "typescript": "^5.7.2",
+    "vite": "^5.4.11",
+    "vitest": "^3.0.0"
+  }
+}

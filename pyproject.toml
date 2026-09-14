@@ -1,0 +1,53 @@
+[project]
+name = "shinyreact-showcase"
+version = "0.1.0"
+description = "A gallery of small Shiny apps whose UI is React, each proving one thing Shiny React makes possible."
+readme = "README.md"
+license = { file = "LICENSE" }
+authors = [{ name = "Samuel Bharti" }]
+
+# Connect Cloud offers 3.9 through 3.14 and defaults to 3.11. shinyreact needs
+# 3.10 or later. 3.12 is the floor here because every data library the apps use
+# has wheels for it, and it is what the deployment is set to.
+requires-python = ">=3.12"
+
+# The gallery process needs only these. Each app declares its own extras in
+# apps/<slug>/requirements.txt, and tools/sync-requirements.mjs rolls them up
+# into the requirements.txt that Connect Cloud installs.
+dependencies = [
+  "shiny>=1.8.0",
+  "shinyreact>=0.1.0",
+  "pyyaml>=6.0",
+]
+
+[dependency-groups]
+dev = [
+  "pytest>=8.3",
+  "ruff>=0.15",
+  "httpx>=0.28",
+]
+
+[tool.ruff]
+line-length = 88
+target-version = "py312"
+exclude = ["node_modules", "docs/local", "**/www"]
+
+[tool.ruff.lint]
+select = [
+  "E",    # pycodestyle
+  "F",    # pyflakes
+  "I",    # isort
+  "UP",   # pyupgrade
+  "B",    # bugbear
+  "SIM",  # simplify
+  "RUF",
+]
+# E402 is deliberately NOT ignored here. An app.py has to resolve its own
+# paths from __file__ before it imports its helper module, so that one import
+# carries a `# noqa: E402` on the line itself. A blanket ignore would hide the
+# same mistake everywhere else.
+
+[tool.pytest.ini_options]
+testpaths = ["apps", "gallery", "tools"]
+python_files = ["test_*.py"]
+addopts = "-q"

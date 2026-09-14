@@ -1,0 +1,76 @@
+:root {
+  color-scheme: light dark;
+  --fg: #16181d;
+  --bg: #ffffff;
+  --muted: #5c6370;
+  --accent: #2f6fed;
+  --line: #e3e6ea;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fg: #e8eaed;
+    --bg: #14161a;
+    --muted: #9aa3ae;
+    --accent: #6b9bff;
+    --line: #2a2e35;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font: 15px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+.app {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+}
+
+h1 {
+  font-size: 1.35rem;
+  margin: 0 0 4px;
+}
+
+.claim {
+  margin: 0 0 20px;
+  color: var(--muted);
+}
+
+.control {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.control input[type="range"] {
+  flex: 1;
+  accent-color: var(--accent);
+}
+
+.chart {
+  width: 100%;
+  height: auto;
+  display: block;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+
+.chart rect {
+  fill: var(--accent);
+}
+
+/* The server is recomputing but the value on screen is still valid. Dim it
+   instead of unmounting, so the chart does not flash between results. */
+.recalculating {
+  opacity: 0.6;
+  transition: opacity 200ms;
+}
+
+.skeleton {
+  color: var(--muted);
+}

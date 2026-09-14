@@ -1,0 +1,251 @@
+# Every app in the showcase. Both galleries read this file at runtime, and
+# tools/render-catalog.mjs turns it into the tables in README.md. Do not edit
+# those tables by hand; edit this file and run the script again.
+#
+# Each app makes ONE claim about something Shiny React enables. The three
+# claim fields are the rule of this repo, and they are what a gallery card
+# shows:
+#
+#   claim        what this app can do
+#   plain_shiny  what plain Shiny does instead, and why it is worse here
+#   this_app     how this app does it
+#
+# An app that cannot fill in all three does not belong in the gallery.
+#
+# status:    planned | building | done
+# deploy:    gallery (runs inside the gallery process) | local (never does)
+# languages: which servers exist. The client is the same either way.
+# compare:   true when the app renders the plain Shiny version beside the
+#            React one, with a counter, so the claim is measured not asserted.
+# features:  which shinyreact hooks or components the app exercises. The
+#            README matrix is built from this, so a gap shows up.
+
+site:
+  py_url: ""
+  r_url: ""
+
+apps:
+  - slug: cell-atlas
+    title: "Cell atlas"
+    domain: "Single cell biology"
+    milestone: M1
+    status: planned
+    deploy: gallery
+    languages: [py, r]
+    library: regl-scatterplot
+    compare: true
+    features: [useShinyOutputValue, useShinyOutputStatus, useShinyInput, useShinyInitialized]
+    claim: "500,000 cells stay interactive, with lasso select."
+    plain_shiny: "A server rendered PNG, or a plotly figure that stalls past 10,000 points."
+    this_app: "One payload, a WebGL scatter, selection handled on the client."
+    blurb: "Half a million single cells in one WebGL scatter, panned and lassoed without touching the server."
+
+  - slug: market-candles
+    title: "Market candles"
+    domain: "Finance"
+    milestone: M3
+    status: planned
+    deploy: gallery
+    languages: [py, r]
+    library: lightweight-charts
+    compare: true
+    features: [useShinyInput, useShinyOutputValue, useShinyOutputStatus, useShinyInitialized]
+    claim: "Crosshair, pan and zoom with zero server round trips."
+    plain_shiny: "Every hover and zoom is a websocket message and a full redraw."
+    this_app: "The server sends a series once. Navigation is client state."
+    blurb: "A trading chart where only a new symbol reaches the server. Everything else is local."
+
+  - slug: sensor-stream
+    title: "Sensor stream"
+    domain: "IoT telemetry"
+    milestone: M2
+    status: planned
+    deploy: gallery
+    languages: [py, r]
+    library: uPlot
+    compare: false
+    features: [useShinyMessageHandler, send_message, useShinyBusy, useShinyInitialized]
+    claim: "Updates at 20Hz append one point instead of redrawing the plot."
+    plain_shiny: "invalidateLater re-renders the whole output on every tick."
+    this_app: "send_message pushes a delta. The chart appends and repaints one column."
+    blurb: "A live telemetry trace that grows a point at a time, not a plot at a time."
+
+  - slug: genome-tracks
+    title: "Genome tracks"
+    domain: "Genomics"
+    milestone: M2
+    status: planned
+    deploy: gallery
+    languages: [py, r]
+    library: "canvas + d3-scale"
+    compare: false
+    features: [useShinyInput, useShinyOutputValue, useShinyInitialized]
+    claim: "Drag the locus across a large interval set with no server call."
+    plain_shiny: "Each pan re-queries the server and re-renders a track image."
+    this_app: "The server sends the region once. Windowing is a client transform."
+    blurb: "A genome browser where dragging is a local transform, not a request."
+
+  - slug: slide-viewer
+    title: "Slide viewer"
+    domain: "Pathology imaging"
+    milestone: M2
+    status: planned
+    deploy: gallery
+    languages: [py, r]
+    library: OpenSeadragon
+    compare: false
+    features: [useShinyInput, useShinyOutputValue, useShinyInitialized]
+    claim: "Gigapixel deep zoom, which a server rendered image cannot do at all."
+    plain_shiny: "renderImage sends one downsampled PNG. There is no zoom."
+    this_app: "A tile pyramid the client requests as the viewer moves."
+    blurb: "A whole slide image at full resolution, tiled and zoomable in the browser."
+
+  - slug: city-density
+    title: "City density"
+    domain: "Geospatial"
+    milestone: M2
+    status: planned
+    deploy: gallery
+    languages: [py, r]
+    library: "deck.gl + maplibre-gl"
+    compare: false
+    features: [useShinyInput, useShinyOutputValue, useShinyOutputStatus, useShinyInitialized]
+    claim: "A million points as a GPU hex layer, rebinned on the client while zooming."
+    plain_shiny: "leaflet clusters give up well before a million markers."
+    this_app: "One typed array to the GPU. Aggregation happens per frame, locally."
+    blurb: "A million geocoded points, rebinned on the GPU as you zoom."
+
+  - slug: protein-view
+    title: "Protein view"
+    domain: "Structural biology"
+    milestone: M2
+    status: planned
+    deploy: gallery
+    languages: [py, r]
+    library: 3Dmol.js
+    compare: false
+    features: [ShinyOutput, useShinyInput, useShinyOutputValue, useShinyInitialized]
+    claim: "Real 3D orbit and style switching, with no htmlwidget to write."
+    plain_shiny: "Using a JS library at all means authoring and shipping an R package."
+    this_app: "npm install, then import it. A hosted Shiny widget sits beside it, for contrast."
+    blurb: "A protein structure you can orbit, using a JavaScript library with no Shiny binding."
+
+  - slug: linked-brush
+    title: "Linked brush"
+    domain: "Statistics and EDA"
+    milestone: M3
+    status: planned
+    deploy: gallery
+    languages: [py, r]
+    library: visx
+    compare: false
+    features: [useShinyOutputValue, useShinyInputValue, useShinyInput, useShinyInitialized]
+    claim: "Four charts brush each other instantly, all on the client."
+    plain_shiny: "Every brush is a round trip, and all four outputs re-render."
+    this_app: "One shared reactive on the server, one shared selection in React state."
+    blurb: "Brush any of four linked charts and the other three follow, with no server involved."
+
+  - slug: query-lab
+    title: "Query lab"
+    domain: "Data engineering"
+    milestone: M4
+    status: planned
+    deploy: gallery
+    languages: [py, r]
+    library: "CodeMirror 6"
+    compare: false
+    features: [useShinyInput, useShinyOutputValue, useShinyOutputError, useShinyBusy, useShinyInitialized]
+    claim: "A real editor: syntax highlighting, completion, and a squiggle on the failing line."
+    plain_shiny: "textAreaInput, and an error printed underneath as plain text."
+    this_app: "CodeMirror on the client, and useShinyOutputError puts the message from the server on the line that caused it."
+    blurb: "Write SQL in a real editor and see the error from the server on the line that caused it."
+
+  - slug: big-grid
+    title: "Big grid"
+    domain: "BI and tabular"
+    milestone: M3
+    status: planned
+    deploy: gallery
+    languages: [py, r]
+    library: "TanStack Table + Virtual"
+    compare: true
+    features: [useShinyInput, useShinyOutputValue, useShinyOutputStatus, useShinyInitialized]
+    claim: "A million rows, with sort and filter that feel instant."
+    plain_shiny: "DT ships a page over the wire per interaction, and selectize gives up past a few thousand options."
+    this_app: "Virtualized rows, client side sort, and server side paging only for what is off screen."
+    blurb: "A million row grid that sorts and filters without waiting on the server."
+
+  - slug: fleet-board
+    title: "Fleet board"
+    domain: "Operations"
+    milestone: M4
+    status: planned
+    deploy: gallery
+    languages: [py, r]
+    library: dnd-kit
+    compare: false
+    features: [ShinyModuleProvider, useSetShinyInput, useShinyOutputValue, useShinyInitialized]
+    claim: "Drag and drop that commits optimistically: the card moves before the server confirms."
+    plain_shiny: "The card snaps back, waits for the round trip, then jumps to its new column."
+    this_app: "React owns the board state and reconciles when the server answers. Each column is a Shiny module."
+    blurb: "A kanban board where the card moves the instant you drop it."
+
+  - slug: churn-monitor
+    title: "Churn monitor"
+    domain: "ML monitoring"
+    milestone: M3
+    status: planned
+    deploy: gallery
+    languages: [py, r]
+    library: visx
+    compare: true
+    features: [useShinyInput, useShinyOutputValue, ImageOutput, useShinyInitialized]
+    claim: "Move the decision threshold and every metric updates with no round trip."
+    plain_shiny: "Each slider step recomputes the confusion matrix on the server and redraws four plots."
+    this_app: "The server sends scores and labels once. Thresholding is arithmetic in the browser."
+    blurb: "Drag a classifier threshold and watch precision, recall and the ROC point move in real time."
+
+  - slug: supply-flow
+    title: "Supply flow"
+    domain: "Supply chain"
+    milestone: M3
+    status: planned
+    deploy: gallery
+    languages: [py, r]
+    library: "d3-sankey + motion"
+    compare: false
+    features: [useShinyInput, useShinyOutputValue, bookmarking, useShinyInitialized]
+    claim: "States animate into each other instead of flickering."
+    plain_shiny: "The output is torn down and rebuilt, so the diagram blinks on every change."
+    this_app: "React keeps the nodes mounted and interpolates between layouts. The view is bookmarkable."
+    blurb: "A sankey diagram that morphs between scenarios, with a URL you can share."
+
+  - slug: text-lens
+    title: "Text lens"
+    domain: "NLP"
+    milestone: M4
+    status: planned
+    deploy: gallery
+    languages: [py, r]
+    library: "CodeMirror decorations"
+    compare: false
+    features: [useShinyInput, useShinyOutputValue, useShinyBusy, useShinyOutputStatus, useShinyInitialized]
+    claim: "Token level highlighting and selection across a long document."
+    plain_shiny: "renderUI rebuilds thousands of spans, and the selection is lost on every update."
+    this_app: "Decorations over a virtualized document, so only what is visible is painted."
+    blurb: "Highlight and select individual tokens across a long document without losing your place."
+
+  - slug: survey-builder
+    title: "Survey builder"
+    domain: "Forms and data entry"
+    milestone: M4
+    status: planned
+    deploy: gallery
+    languages: [py, r]
+    library: "react-hook-form + zod"
+    compare: false
+    features: [useShinyInput, "typed inputs", useShinyOutputValue, useShinyInitialized]
+    claim: "A multi step form with validation and undo, without a reactive per field."
+    plain_shiny: "One input, one observer and one validator per field, all on the server."
+    this_app: "The whole form is one React object and one Shiny input. Validation is a zod schema."
+    blurb: "Build a form, validate it and undo your way back, with one input crossing the wire."

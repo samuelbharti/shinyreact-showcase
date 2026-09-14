@@ -1,0 +1,89 @@
+# Pre-commit hooks for the shinyreact showcase.
+# Setup:  pipx install prek  &&  prek install
+# Run on everything:  prek run --all-files
+# Docs: https://pre-commit.com / https://github.com/j178/prek
+
+# Generated or vendored paths that hooks should never touch. Every app commits
+# its Vite output on purpose (Connect Cloud has no Node at deploy time), but
+# formatting or spell checking a minified bundle helps nobody.
+exclude: '^(node_modules/|.*/node_modules/|.*/www/ui\.js|.*/www/ui\.css|docs/local/)'
+
+repos:
+  # R formatting with air, matching air.toml.
+  - repo: https://github.com/posit-dev/air-pre-commit
+    rev: 0.10.0
+    hooks:
+      - id: air-format
+
+  # Python formatting and linting.
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.15.22
+    hooks:
+      - id: ruff-check
+        args: ["--fix"]
+      - id: ruff-format
+
+  - repo: local
+    hooks:
+      # Debug leftovers. pygrep needs no R or Python install.
+      - id: no-browser-statement
+        name: no browser() statements
+        entry: 'browser\('
+        language: pygrep
+        files: '\.R$'
+
+      - id: no-debug-statement
+        name: no debug()/debugonce() statements
+        entry: '\bdebug(once)?\('
+        language: pygrep
+        files: '\.R$'
+
+      - id: no-print-statement
+        name: no print() statements in R
+        entry: '\bprint\('
+        language: pygrep
+        files: '\.R$'
+        exclude: '^tools/'
+
+      # Secrets and local project files, matching the global rule.
+      - id: no-env-files
+        name: no .env / .Renviron / .Rproj.user files
+        entry: "block"
+        language: fail
+        files: '(^|/)(\.env(\..*)?|\.Renviron(\..*)?|.*\.Rproj|.*\.Rproj\.user)$'
+
+      # House style: plain writing, and no em dashes anywhere.
+      - id: no-em-dash
+        name: no em dash character in tracked text
+        entry: "—"
+        language: pygrep
+        types: [text]
+        # This file names the character it blocks, so it is exempt from its
+        # own rule.
+        exclude: '^(package-lock\.json|\.pre-commit-config\.yaml)$'
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: mixed-line-ending
+        args: ["--fix=lf"]
+      - id: check-added-large-files
+        args: ["--maxkb=2000"]
+      - id: check-yaml
+      - id: check-json
+      - id: check-merge-conflict
+      - id: detect-private-key
+
+  # Secret scanning: catch tokens and keys before they land.
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.30.1
+    hooks:
+      - id: gitleaks
+
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.3.0
+    hooks:
+      - id: codespell
+        exclude: '^(package-lock\.json|renv\.lock|manifest\.json)$'
