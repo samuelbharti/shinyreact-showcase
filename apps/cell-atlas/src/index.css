@@ -1,0 +1,279 @@
+:root {
+  --fg: #16181d;
+  --bg: #ffffff;
+  --panel: #f7f8fa;
+  --muted: #5c6370;
+  --accent: #2f6fed;
+  --line: #e3e6ea;
+  --up: #1a7f52;
+  --down: #b23b3b;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font: 14px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+header h1 {
+  font-size: 1.3rem;
+  margin: 0 0 2px;
+}
+
+.claim {
+  margin: 0;
+  color: var(--muted);
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding: 10px 12px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.toolbar label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+}
+
+.toolbar select,
+.toolbar input[type="range"] {
+  accent-color: var(--accent);
+}
+
+.meters {
+  display: flex;
+  gap: 18px;
+  margin-left: auto;
+}
+
+.meter {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  line-height: 1.15;
+}
+
+.meter-value {
+  font-size: 1.25rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+.meter-label {
+  font-size: 0.72rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  gap: 16px;
+  align-items: stretch;
+}
+
+.scatter {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  min-height: 320px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.scatter canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.scatter.loading {
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+}
+
+.panel {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px 14px;
+  background: var(--panel);
+  overflow-y: auto;
+  max-height: 640px;
+}
+
+/* The server is recomputing, but what is on screen is still the last real
+   answer. Dim it rather than unmounting, so the panel does not flash. */
+.panel.recalculating {
+  opacity: 0.6;
+  transition: opacity 200ms;
+}
+
+.panel h2 {
+  font-size: 0.95rem;
+  margin: 0 0 8px;
+}
+
+.panel h3 {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--muted);
+  margin: 16px 0 6px;
+}
+
+.hint {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+kbd {
+  font: inherit;
+  font-size: 0.8em;
+  border: 1px solid var(--line);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  padding: 0 4px;
+  background: #fff;
+}
+
+.count {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.composition {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.composition li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 2px 0;
+}
+
+.swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  flex: none;
+}
+
+.composition .label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.composition .value {
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+}
+
+.markers {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+.markers th {
+  text-align: right;
+  font-weight: 500;
+  color: var(--muted);
+  font-size: 0.75rem;
+  padding-bottom: 4px;
+}
+
+.markers th:first-child,
+.markers .gene {
+  text-align: left;
+}
+
+.markers td {
+  text-align: right;
+  padding: 2px 0;
+}
+
+.markers .gene {
+  font-weight: 600;
+}
+
+.markers .up {
+  color: var(--up);
+}
+
+.markers .down {
+  color: var(--down);
+}
+
+.legend {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  color: var(--muted);
+}
+
+.legend-label {
+  font-weight: 600;
+  color: var(--fg);
+}
+
+.ramp {
+  flex: 1;
+  max-width: 220px;
+  height: 10px;
+  border-radius: 5px;
+  background: linear-gradient(
+    to right,
+    #440154, #472d7b, #3b528b, #2c728e, #21918c,
+    #28ae80, #5ec962, #addc30, #fde725
+  );
+}
+
+.shiny-output-error {
+  color: var(--down);
+}
+
+@media (max-width: 780px) {
+  .stage {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .panel {
+    max-height: none;
+  }
+
+  .meters {
+    margin-left: 0;
+  }
+}

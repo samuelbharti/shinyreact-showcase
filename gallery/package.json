@@ -1,0 +1,12 @@
+{
+  "name": "gallery",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite build --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --root ../.. gallery"
+  },
+  "dependencies": {}
+}

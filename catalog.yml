@@ -29,16 +29,16 @@ apps:
     title: "Cell atlas"
     domain: "Single cell biology"
     milestone: M1
-    status: planned
+    status: done
     deploy: gallery
     languages: [py, r]
     library: regl-scatterplot
     compare: true
     features: [useShinyOutputValue, useShinyOutputStatus, useShinyInput, useShinyInitialized]
-    claim: "500,000 cells stay interactive, with lasso select."
+    claim: "200,000 cells stay interactive, with lasso select."
     plain_shiny: "A server rendered PNG, or a plotly figure that stalls past 10,000 points."
     this_app: "One payload, a WebGL scatter, selection handled on the client."
-    blurb: "Half a million single cells in one WebGL scatter, panned and lassoed without touching the server."
+    blurb: "Two hundred thousand single cells in one WebGL scatter, panned and lassoed without touching the server."
 
   - slug: market-candles
     title: "Market candles"

@@ -3,7 +3,7 @@
 // behaviour that is easy to get wrong and invisible in a screenshot: the
 // first paint is gated, and a recalculating output keeps the old chart on
 // screen instead of flashing a skeleton.
-import { render, screen } from "@testing-library/react";
+import { cleanup, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import App from "../src/App";
@@ -18,6 +18,9 @@ const stub: Stub = { initialized: true, histogram: undefined, status: "ready" };
 const setBins = vi.fn();
 
 beforeEach(() => {
+  // vitest runs with globals off, so testing-library does not clean up on
+  // its own. Without this, one test sees the DOM the previous one left.
+  cleanup();
   stub.initialized = true;
   stub.histogram = undefined;
   stub.status = "ready";

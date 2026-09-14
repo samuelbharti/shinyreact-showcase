@@ -106,13 +106,15 @@ jobs:
       - name: Tests
         shell: Rscript {0}
         run: |
-          apps <- list.dirs("apps", recursive = FALSE)
-          apps <- apps[file.exists(file.path(apps, "tests", "testthat.R"))]
-          if (length(apps) == 0) {
+          # The repo root is itself a Shiny app: app.R is the R gallery,
+          # and its tests live in tests/ beside it.
+          targets <- c(".", list.dirs("apps", recursive = FALSE))
+          targets <- targets[file.exists(file.path(targets, "tests", "testthat.R"))]
+          if (length(targets) == 0) {
             cat("No R tests yet.\n")
           } else {
-            for (app in apps) {
-              cat("==", app, "==\n")
-              shiny::runTests(app, assert = TRUE)
+            for (target in targets) {
+              cat("==", target, "==\n")
+              shiny::runTests(target, assert = TRUE)
             }
           }
