@@ -25,7 +25,7 @@
 site:
   title: "Shiny React showcase"
   author: "Samuel Bharti"
-  author_url: "https://github.com/samuelbharti"
+  author_url: "https://samuelbharti.com"
   repo_url: "https://github.com/samuelbharti/shinyreact-showcase"
   license: "MIT"
   py_url: ""
@@ -33,13 +33,22 @@ site:
   # The footer renders this list as it stands. The two shinyreact URLs are the
   # ones the packages declare for themselves, in the npm package homepage and
   # the PyPI project URLs, rather than anything guessed from the name.
+  # The footer column, in order. hero: true also puts a link in the two
+  # buttons under the title. That is a flag rather than "the first two",
+  # because a positional rule breaks silently the moment a link is added
+  # above them, which is exactly what adding the website did.
+  #
   # The docs landing page rather than the per language references: it links
   # to the Python, R and JavaScript ones itself, so one link covers all three.
   links:
+    - label: "samuelbharti.com"
+      url: "https://samuelbharti.com"
     - label: "Source for this gallery"
       url: "https://github.com/samuelbharti/shinyreact-showcase"
+      hero: true
     - label: "Shiny React on GitHub"
       url: "https://github.com/posit-dev/shinyreact"
+      hero: true
     - label: "Shiny React documentation"
       url: "https://posit-dev.github.io/shinyreact/"
 

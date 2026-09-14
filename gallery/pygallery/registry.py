@@ -130,7 +130,11 @@ def read_site(root: Path) -> dict:
         "repoUrl": site.get("repo_url", ""),
         "license": site.get("license", ""),
         "links": [
-            {"label": link.get("label", ""), "url": link.get("url", "")}
+            {
+                "label": link.get("label", ""),
+                "url": link.get("url", ""),
+                "hero": bool(link.get("hero", False)),
+            }
             for link in site.get("links") or []
             if link.get("url")
         ],
