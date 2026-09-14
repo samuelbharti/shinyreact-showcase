@@ -5,7 +5,7 @@ server keeps the reactive computation, and a React client owns the screen.
 Each one picks a single thing plain Shiny does badly, then puts a number on
 what the split buys. The table below says which are built.
 
-[Shiny React](https://posit-dev.github.io/shinyreact/) joins the two halves.
+[shinyreact](https://posit-dev.github.io/shinyreact/) joins the two halves.
 The server returns JSON through `reactive_output()`, the client reads it
 through hooks, and the two meet at named inputs and outputs. Everything you
 touch on the page belongs to React, so panning a plot or dragging a slider
@@ -147,7 +147,7 @@ npm run dev -w apps/<slug>      # rebuild on every change
 npm run check-built             # what CI runs
 ```
 
-A stale `www/ui.js` is the second most common confusion in a Shiny React app.
+A stale `www/ui.js` is the second most common confusion in a shinyreact app.
 The first is two copies of React on one page, which makes every hook return
 nothing. The Vite configuration in `templates/app/` prevents that by leaving
 React out of the bundle. Copy it. Do not write one by hand.

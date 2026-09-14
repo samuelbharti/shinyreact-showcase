@@ -1,7 +1,7 @@
 [project]
 name = "shinyreact-showcase"
 version = "0.1.0"
-description = "A gallery of small Shiny apps whose UI is React, each proving one thing Shiny React makes possible."
+description = "Eleven Shiny apps where React owns the screen: a 200,000-point WebGL scatter, a million-row grid, gigapixel deep zoom, a 20Hz stream. One TSX bundle, served by both a Python and an R server."
 readme = "README.md"
 license = { file = "LICENSE" }
 authors = [{ name = "Samuel Bharti" }]

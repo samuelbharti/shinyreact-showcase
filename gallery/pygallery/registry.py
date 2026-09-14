@@ -124,7 +124,7 @@ def read_site(root: Path) -> dict:
     """Who made this and where it lives, for the footer."""
     site = read_catalog(root).get("site") or {}
     return {
-        "title": site.get("title", "Shiny React showcase"),
+        "title": site.get("title", "shinyreact showcase"),
         "author": site.get("author", ""),
         "authorUrl": site.get("author_url", ""),
         "repoUrl": site.get("repo_url", ""),

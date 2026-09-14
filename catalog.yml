@@ -2,7 +2,7 @@
 # tools/render-catalog.mjs turns it into the tables in README.md. Do not edit
 # those tables by hand; edit this file and run the script again.
 #
-# Each app makes ONE claim about something Shiny React enables. The three
+# Each app makes ONE claim about something shinyreact enables. The three
 # claim fields are the rule of this repo, and they are what a gallery card
 # shows:
 #
@@ -23,7 +23,7 @@
 # Who made this and where it lives. The landing page footer reads these,
 # so there is no name or link hard coded in the client.
 site:
-  title: "Shiny React showcase"
+  title: "shinyreact showcase"
   author: "Samuel Bharti"
   author_url: "https://samuelbharti.com"
   repo_url: "https://github.com/samuelbharti/shinyreact-showcase"
@@ -46,10 +46,10 @@ site:
     - label: "Source for this gallery"
       url: "https://github.com/samuelbharti/shinyreact-showcase"
       hero: true
-    - label: "Shiny React on GitHub"
+    - label: "shinyreact on GitHub"
       url: "https://github.com/posit-dev/shinyreact"
       hero: true
-    - label: "Shiny React documentation"
+    - label: "shinyreact documentation"
       url: "https://posit-dev.github.io/shinyreact/"
 
 # The families the cards are grouped under on the landing page, in the order

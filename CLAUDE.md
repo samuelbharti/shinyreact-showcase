@@ -5,7 +5,7 @@ Rules for an agent working in this repo. Read this first.
 ## What this repo is
 
 A gallery of 15 small Shiny apps whose screen is built in React. Each app
-proves one thing that Shiny React makes possible and plain Shiny does not.
+proves one thing that shinyreact makes possible and plain Shiny does not.
 `catalog.yml` lists every app and is the only list.
 
 This repo is not `shinyreact-apps`. That one ports existing bslib apps and has

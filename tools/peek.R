@@ -24,7 +24,7 @@
 #            the pixels back, which does work.
 #
 # A screenshot alone does not prove much. The console is the part that
-# catches a Shiny React app failing quietly: two copies of React make every
+# catches a shinyreact app failing quietly: two copies of React make every
 # hook return nothing, with no error on screen and nothing in the server log.
 #
 # Exit code is 1 when the console logged an error, so this works in a check.
@@ -124,7 +124,7 @@ chrome$Runtime$exceptionThrown(callback_ = function(event) {
 chrome$Page$navigate(url, wait_ = TRUE)
 try(chrome$Page$loadEventFired(wait_ = TRUE, timeout_ = 20), silent = TRUE)
 
-# A Shiny React app is not finished when load fires. The websocket still has
+# A shinyreact app is not finished when load fires. The websocket still has
 # to connect and the first outputs have to arrive.
 Sys.sleep(wait)
 

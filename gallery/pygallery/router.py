@@ -82,7 +82,7 @@ def _gallery_ui(root: Path, registry: dict[str, Entry], other_base: str):
         return page_react(
             _catalog_tag(cards, groups, site),
             src_dir=root / "gallery" / "www",
-            title="Shiny React showcase",
+            title="shinyreact showcase",
         )
 
     return ui

@@ -15,7 +15,7 @@ gallery_ui <- function() {
       htmltools::HTML(catalog_json())
     ),
     src_dir = file.path(GALLERY_DIR, "www"),
-    title = "Shiny React showcase"
+    title = "shinyreact showcase"
   )
 }
 
