@@ -21,6 +21,27 @@ const check = process.argv.includes("--check");
 // Kept in step with pyproject.toml, which is what a local checkout installs.
 const GALLERY_DEPS = ["shiny>=1.8.0", "shinyreact>=0.1.0", "pyyaml>=6.0"];
 
+// Libraries an app has to declare if it imports them. This list is the
+// heuristic part: a package missing from it is not checked, so add to it
+// when an app reaches for something new.
+//
+// The bug this catches is not a crash at build time. It is a deployment that
+// starts fine and then fails on the first visit to the one app whose import
+// was never installed, which is the worst place to find out. Four apps had
+// this wrong at once before the check existed.
+const MUST_DECLARE = [
+  "numpy",
+  "matplotlib",
+  "pandas",
+  "polars",
+  "pyarrow",
+  "scipy",
+  "shinywidgets",
+  "plotly",
+  "htmltools",
+  "starlette",
+];
+
 function parse(text) {
   return text
     .split("\n")
@@ -50,6 +71,31 @@ try {
 const byName = new Map();
 for (const spec of GALLERY_DEPS) byName.set(nameOf(spec), { spec, from: ["gallery"] });
 
+/** Third party modules an app's Python actually imports. */
+async function importsOf(appDir) {
+  const found = new Set();
+  let entries = [];
+  try {
+    entries = await readdir(appDir, { withFileTypes: true });
+  } catch {
+    return found;
+  }
+
+  for (const entry of entries) {
+    if (!entry.isFile() || !entry.name.endsWith(".py")) continue;
+    const source = await readFile(path.join(appDir, entry.name), "utf8");
+    for (const line of source.split("\n")) {
+      const match = /^\s*(?:import|from)\s+([A-Za-z_][\w.]*)/.exec(line);
+      if (!match) continue;
+      const top = match[1].split(".")[0];
+      if (MUST_DECLARE.includes(top)) found.add(top);
+    }
+  }
+  return found;
+}
+
+const undeclared = [];
+
 const conflicts = [];
 for (const app of appDirs) {
   const file = path.join(root, "apps", app, "requirements.txt");
@@ -59,6 +105,11 @@ for (const app of appDirs) {
   } catch {
     continue;
   }
+  const declared = new Set(parse(text).map(nameOf));
+  for (const module of await importsOf(path.join(root, "apps", app))) {
+    if (!declared.has(module)) undeclared.push(`  apps/${app} imports ${module}`);
+  }
+
   for (const spec of parse(text)) {
     const name = nameOf(spec);
     const seen = byName.get(name);
@@ -70,6 +121,15 @@ for (const app of appDirs) {
       seen.from.push(app);
     }
   }
+}
+
+if (undeclared.length) {
+  console.error("These apps import something their requirements.txt does not name:");
+  console.error(undeclared.join("\n"));
+  console.error("");
+  console.error("Connect Cloud installs the rolled up file, so the deployment");
+  console.error("would start and then fail on the first visit to that app.");
+  process.exit(1);
 }
 
 if (conflicts.length) {

@@ -1,0 +1,14 @@
+{
+  "name": "market-candles",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite build --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --root ../.. apps/market-candles"
+  },
+  "dependencies": {
+    "lightweight-charts": "^5.2.1"
+  }
+}

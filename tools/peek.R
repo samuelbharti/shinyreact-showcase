@@ -13,6 +13,9 @@
 #   --eval-file  a file holding that expression. Easier than quoting anything
 #            multi line through a shell.
 #   --size   viewport, as WIDTHxHEIGHT. Default 1280x900.
+#   --eval-timeout  seconds to allow the expression. Default 120.
+#            An interaction script that drives the app and waits for it
+#            needs far longer than chromote's own default, which is 10.
 #   --canvas a CSS selector for a <canvas>. Saved separately as
 #            <out>-canvas.png. Use this for any app that draws with WebGL:
 #            Chrome leaves canvas content out of a page screenshot in
@@ -45,6 +48,7 @@ if (!is.null(eval_file)) {
   js <- paste(readLines(eval_file, warn = FALSE), collapse = "\n")
 }
 size <- arg_value("size", "1280x900")
+eval_timeout <- as.numeric(arg_value("eval-timeout", "120"))
 canvas_selector <- arg_value("canvas")
 
 if (is.null(url) || is.null(out)) {
@@ -125,7 +129,8 @@ if (!is.null(js)) {
   evaluated <- chrome$Runtime$evaluate(
     js,
     returnByValue = TRUE,
-    awaitPromise = TRUE
+    awaitPromise = TRUE,
+    timeout_ = eval_timeout
   )
   result <- evaluated$result$value
   if (!is.null(evaluated$exceptionDetails)) {

@@ -4,3 +4,4 @@
 shiny>=1.8.0
 shinyreact>=0.1.0
 numpy>=2.0
+matplotlib>=3.8

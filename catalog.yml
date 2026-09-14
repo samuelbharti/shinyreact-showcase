@@ -44,12 +44,12 @@ apps:
     title: "Market candles"
     domain: "Finance"
     milestone: M3
-    status: planned
+    status: done
     deploy: gallery
     languages: [py, r]
     library: lightweight-charts
     compare: true
-    features: [useShinyInput, useShinyOutputValue, useShinyOutputStatus, useShinyInitialized]
+    features: [useShinyInput, useSetShinyInput, useShinyOutputValue, useShinyOutputStatus, ImageOutput, useShinyInitialized]
     claim: "Crosshair, pan and zoom with zero server round trips."
     plain_shiny: "Every hover and zoom is a websocket message and a full redraw."
     this_app: "The server sends a series once. Navigation is client state."
