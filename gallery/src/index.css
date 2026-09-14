@@ -333,6 +333,16 @@ a {
   border-bottom-color: var(--rule);
 }
 
+/* Every link in this column leaves the site. Saying so is the other half of
+   opening them in a new tab: a reader should know before they click, not
+   after their tab count changes. */
+.footer-links a::after {
+  content: "↗";
+  margin-left: 5px;
+  font-size: 0.78em;
+  color: var(--faint);
+}
+
 .footer-base {
   max-width: var(--page);
   margin: 0 auto;

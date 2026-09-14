@@ -6,6 +6,23 @@ import { assetUrl, byGroup, readCatalog, type Entry, type Group } from "@/catalo
 // changes while the page is open, so there is nothing to subscribe to.
 const CATALOG = readCatalog();
 
+/**
+ * Props that send a link away from this page, when it goes away from it.
+ *
+ * Decided from the href rather than from a list of which links are which, so
+ * anything added to the site block in catalog.yml gets it without anyone
+ * remembering to. An app link is relative and stays in the tab; anything with
+ * a scheme, or a protocol relative //, is somewhere else.
+ *
+ * rel is not decoration. Without noopener, the page being opened gets a
+ * handle on this one through window.opener and can navigate it somewhere
+ * else, which is a real way to lose someone.
+ */
+function away(href: string) {
+  const leaves = /^[a-z][a-z0-9+.-]*:/i.test(href) || href.startsWith("//");
+  return leaves ? { target: "_blank", rel: "noopener noreferrer" } : {};
+}
+
 export default function App() {
   const sections = byGroup(CATALOG.apps, CATALOG.groups);
   const compared = CATALOG.apps.filter((entry) => entry.compare).length;
@@ -32,7 +49,7 @@ export default function App() {
 
           <div className="hero-links">
             {links.slice(0, 2).map((link) => (
-              <a key={link.url} href={link.url}>
+              <a key={link.url} href={link.url} {...away(link.url)}>
                 {link.label}
               </a>
             ))}
@@ -111,7 +128,7 @@ function Card({ entry }: { entry: Entry }) {
         </a>
         {entry.compare ? <span className="tag">Runs both paths</span> : null}
         {entry.other ? (
-          <a className="other" href={entry.other}>
+          <a className="other" href={entry.other} {...away(entry.other)}>
             {CATALOG.language === "Python" ? "R version" : "Python version"}
           </a>
         ) : null}
@@ -138,7 +155,9 @@ function Footer() {
         <ul className="footer-links">
           {links.map((link) => (
             <li key={link.url}>
-              <a href={link.url}>{link.label}</a>
+              <a href={link.url} {...away(link.url)}>
+                {link.label}
+              </a>
             </li>
           ))}
         </ul>
@@ -146,7 +165,13 @@ function Footer() {
 
       <p className="footer-base">
         Built by{" "}
-        {authorUrl ? <a href={authorUrl}>{author}</a> : <strong>{author}</strong>}
+        {authorUrl ? (
+          <a href={authorUrl} {...away(authorUrl)}>
+            {author}
+          </a>
+        ) : (
+          <strong>{author}</strong>
+        )}
         {license ? ` · ${license}` : ""} · {year}
       </p>
     </footer>
