@@ -7,7 +7,7 @@
 # Regenerate with: node tools/sync-requirements.mjs
 
 matplotlib>=3.8  # market-candles
-numpy>=2.0  # big-grid, cell-atlas, city-density, genome-tracks, market-candles
+numpy>=2.0  # big-grid, cell-atlas, city-density, genome-tracks, linked-brush, market-candles
 pyyaml>=6.0  # gallery
 shiny>=1.8.0  # gallery, big-grid, cell-atlas, city-density, genome-tracks, market-candles, protein-view, sensor-stream, slide-viewer
 shinyreact>=0.1.0  # gallery, big-grid, cell-atlas, city-density, genome-tracks, market-candles, protein-view, sensor-stream, slide-viewer
