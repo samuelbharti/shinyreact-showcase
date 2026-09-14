@@ -59,7 +59,7 @@ apps:
     title: "Sensor stream"
     domain: "IoT telemetry"
     milestone: M2
-    status: planned
+    status: done
     deploy: gallery
     languages: [py, r]
     library: uPlot
