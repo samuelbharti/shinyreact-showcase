@@ -76,6 +76,49 @@ then the R servers still run locally and still run in CI.
 Record the content ID afterwards. `rsconnect` cannot look content up by name on
 Connect Cloud, so the ID is the only stable handle for later automation.
 
+## Bookmarking in the R gallery
+
+URL bookmarking works in three of the four places an app can run, and not in
+the fourth.
+
+| Where | Works |
+| --- | --- |
+| `shiny run apps/supply-flow/app.py` | yes |
+| `shiny::runApp("apps/supply-flow")` | yes |
+| Python gallery, `/app/supply-flow/` | yes |
+| R gallery, `/?app=supply-flow` | no |
+
+The Python gallery enables it per app: `loader.py` passes
+`bookmark_store="url"` to `ReactApp` for any app whose `catalog.yml` entry
+lists `bookmarking` in its features.
+
+The R gallery cannot, so far. Bookmarking in Shiny is one shiny option,
+`bookmarkStore`, and a session reads it when the session is created. The R
+gallery is a single app serving many, so the option has to be set on the
+gallery. It was not possible to set it anywhere a session would see it:
+
+- `shinyApp(enableBookmarking = "url")` puts it in the app object, and that
+  is what `enableBookmarking()` does too, since the argument simply calls it.
+- A top level `enableBookmarking("url")` in `app.R` runs while the file is
+  being sourced, and `runApp()` scopes shiny options around the running app,
+  so the value is gone before any session starts.
+- `onStart = function() enableBookmarking("url")` did not reach it either.
+- `shinyOptions(bookmarkStore = "url")` inside `router_ui`, which runs per
+  request, does not reach the session that follows it.
+
+In all four, `getShinyOption("bookmarkStore")` inside the session reads
+unset, `session$doBookmark()` quietly does nothing, no `onBookmark` or
+`onBookmarked` callback fires, and the address bar never moves. There is no
+error and nothing in the log, which is the part worth knowing.
+
+`router_server` already puts `?app=<slug>` back onto a bookmark URL, because
+Shiny builds that URL from the app's inputs alone and would otherwise drop
+the one parameter that says which app it is. Those lines do nothing today and
+are kept for the day the option can be set.
+
+This is not blocking anything. The R gallery is already waiting on
+`shinyreact` reaching CRAN before it can be deployed at all.
+
 ## Known faults worth expecting
 
 These came out of running the same setup in `shiny-showcase-bioinformatics`.

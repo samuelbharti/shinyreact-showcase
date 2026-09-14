@@ -39,4 +39,35 @@ router_server <- function(input, output, session) {
     return(invisible(NULL))
   }
   load_app(slug)$server(input, output, session)
+
+  # An app that bookmarks writes its own query string, and Shiny builds that
+  # string from the app's inputs alone. In the gallery that would throw away
+  # the ?app= saying which app this is, and the link would reopen the landing
+  # page. This callback is registered after the app's own, and the last write
+  # to the address bar wins.
+  #
+  # It does nothing today, because bookmarking is not enabled for the R
+  # gallery. See docs/deploying.md. It is here because the moment it is
+  # enabled, this is the bug that would otherwise appear, and it is cheaper to
+  # keep the two lines than to rediscover it.
+  shiny::onBookmarked(function(url) {
+    shiny::updateQueryString(with_app_param(url, slug))
+  })
+
+  invisible(NULL)
+}
+
+# Put ?app=<slug> back at the front of a bookmark URL.
+with_app_param <- function(url, slug) {
+  mark <- regexpr("?", url, fixed = TRUE)
+  if (mark < 0) {
+    return(paste0(url, "?app=", slug))
+  }
+  paste0(
+    substr(url, 1, mark),
+    "app=",
+    slug,
+    "&",
+    substr(url, mark + 1, nchar(url))
+  )
 }

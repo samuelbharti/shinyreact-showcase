@@ -1,0 +1,16 @@
+{
+  "name": "supply-flow",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite build --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --root ../.. apps/supply-flow"
+  },
+  "dependencies": {
+    "@types/d3-sankey": "^0.12.5",
+    "d3-sankey": "^0.12.3",
+    "motion": "^13.2.0"
+  }
+}
