@@ -1,0 +1,33 @@
+{
+  "seed": 20260913,
+  "biotypes": [
+    "protein coding",
+    "lncRNA",
+    "pseudogene",
+    "miRNA"
+  ],
+  "chromosomes": [
+    {
+      "name": "chr1",
+      "span": 248956422,
+      "genes": 8000,
+      "bins": 24000,
+      "bytes": 112000
+    },
+    {
+      "name": "chr7",
+      "span": 159345973,
+      "genes": 5200,
+      "bins": 16000,
+      "bytes": 73600
+    },
+    {
+      "name": "chr17",
+      "span": 83257441,
+      "genes": 3400,
+      "bins": 9000,
+      "bytes": 45200
+    }
+  ],
+  "layout": "uint32 start[g], uint16 length100[g], uint8 strand[g], uint8 biotype[g], uint16 coverage[b]"
+}

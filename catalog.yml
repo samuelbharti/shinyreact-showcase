@@ -74,7 +74,7 @@ apps:
     title: "Genome tracks"
     domain: "Genomics"
     milestone: M2
-    status: planned
+    status: done
     deploy: gallery
     languages: [py, r]
     library: "canvas + d3-scale"
