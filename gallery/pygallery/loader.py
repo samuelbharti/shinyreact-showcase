@@ -109,9 +109,16 @@ def _import_module(name: str, path: Path) -> ModuleType:
 
 def _back_link():
     # Relative, because the app is mounted at /app/<slug>/ and the gallery is
-    # two levels up. An absolute /  would break behind a proxy that serves
-    # the content under a path of its own.
+    # two levels up. An absolute / would break behind a proxy that serves the
+    # content under a path of its own.
+    #
+    # Top right, because that is where a reader looks for a way out and
+    # because every app in this repo lays its own content out left aligned
+    # under a max width, so the top right corner is the one place a floating
+    # control is never in the way. Bottom left, where this used to be, was
+    # missed entirely.
     return tags.a(
+        tags.span("←", class_="arrow", aria_hidden="true"),
         "Back to the gallery",
         href="../../",
         class_="gallery-back",
@@ -125,19 +132,44 @@ def _back_link_style():
     return tags.style("""
       .gallery-back {
         position: fixed;
-        left: 12px;
-        bottom: 12px;
-        z-index: 1000;
-        padding: 6px 12px;
+        right: 16px;
+        top: 14px;
+        z-index: 2000;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 7px 14px 7px 11px;
         border-radius: 999px;
-        border: 1px solid rgba(0, 0, 0, 0.12);
-        background: rgba(255, 255, 255, 0.92);
+        border: 1px solid rgba(15, 23, 42, 0.12);
+        background: #ffffff;
         color: #16181d;
-        font: 13px system-ui, -apple-system, "Segoe UI", sans-serif;
+        font: 500 13px system-ui, -apple-system, "Segoe UI", sans-serif;
         text-decoration: none;
-        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+        box-shadow: 0 2px 10px rgba(16, 24, 40, 0.14);
+        transition: box-shadow 120ms ease, border-color 120ms ease;
       }
       .gallery-back:hover {
-        border-color: rgba(0, 0, 0, 0.28);
+        border-color: rgba(47, 111, 237, 0.55);
+        box-shadow: 0 4px 16px rgba(16, 24, 40, 0.2);
+      }
+      .gallery-back:focus-visible {
+        outline: 2px solid #2f6fed;
+        outline-offset: 2px;
+      }
+      .gallery-back .arrow {
+        color: #2f6fed;
+        font-size: 14px;
+        line-height: 1;
+      }
+      /* Apps lay their own content out under a max width, so on a narrow
+         screen a floating pill would sit on top of the heading. Tuck it in
+         with the page instead of over it. */
+      @media (max-width: 900px) {
+        .gallery-back {
+          top: 8px;
+          right: 8px;
+          padding: 5px 11px 5px 9px;
+          font-size: 12px;
+        }
       }
     """)

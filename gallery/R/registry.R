@@ -38,6 +38,7 @@ read_registry <- function(root = ROOT) {
       plain_shiny = app$plain_shiny %||% "",
       this_app = app$this_app %||% "",
       domain = app$domain %||% "",
+      group = app$group %||% "",
       library = app$library %||% "",
       features = unlist(app$features %||% list()),
       compare = isTRUE(app$compare),
@@ -45,7 +46,34 @@ read_registry <- function(root = ROOT) {
     )
   }
 
-  list(entries = entries, site = site)
+  # The card families, in the order the landing page draws them, and who made
+  # this. Both travel with the cards rather than being repeated in the bundle,
+  # because a group the client does not know about would leave its apps
+  # unreachable.
+  groups <- lapply(catalog$groups %||% list(), function(g) {
+    list(
+      id = g$id %||% "",
+      title = g$title %||% "",
+      note = g$note %||% "",
+      colour = g$colour %||% "#5c6370"
+    )
+  })
+
+  list(
+    entries = entries,
+    site = site,
+    groups = groups,
+    footer = list(
+      title = site$title %||% "Shiny React showcase",
+      author = site$author %||% "",
+      authorUrl = site$author_url %||% "",
+      repoUrl = site$repo_url %||% "",
+      license = site$license %||% "",
+      links = lapply(site$links %||% list(), function(link) {
+        list(label = link$label %||% "", url = link$url %||% "")
+      })
+    )
+  )
 }
 
 REGISTRY <- read_registry()
@@ -86,6 +114,7 @@ catalog_json <- function(registry = REGISTRY) {
       plainShiny = e$plain_shiny,
       thisApp = e$this_app,
       domain = e$domain,
+      group = e$group,
       library = e$library,
       features = I(as.character(e$features)),
       compare = e$compare,
@@ -99,7 +128,12 @@ catalog_json <- function(registry = REGISTRY) {
   })
 
   blob <- jsonlite::toJSON(
-    list(language = "R", apps = cards),
+    list(
+      language = "R",
+      apps = cards,
+      groups = registry$groups,
+      site = registry$footer
+    ),
     auto_unbox = TRUE,
     null = "null"
   )

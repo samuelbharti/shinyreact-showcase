@@ -154,3 +154,33 @@ test_that("an app page carries the back link", {
   expect_match(markup, "gallery-back", fixed = TRUE)
   expect_match(markup, "Back to the gallery", fixed = TRUE)
 })
+
+test_that("the catalog carries the groups and the footer", {
+  parsed <- jsonlite::fromJSON(catalog_json(), simplifyVector = FALSE)
+
+  # Biology leads the page. It is the first thing a reader sees, and it is
+  # where the largest payloads and the heaviest plots are.
+  expect_equal(parsed$groups[[1]]$id, "life-sciences")
+  expect_true(nzchar(parsed$site$author))
+  expect_true(startsWith(parsed$site$repoUrl, "https://"))
+})
+
+test_that("every card names a group the landing page was given", {
+  # An app whose group is a typo would be sorted into a family that does not
+  # exist, and the client would have to invent a home for it. catalog.yml is
+  # hand edited, so this is worth an assertion rather than a convention.
+  parsed <- jsonlite::fromJSON(catalog_json(), simplifyVector = FALSE)
+  known <- vapply(parsed$groups, function(g) g$id, character(1))
+
+  for (card in parsed$apps) {
+    expect_true(card$group %in% known, info = card$slug)
+  }
+})
+
+test_that("every group carries a colour the client can use", {
+  parsed <- jsonlite::fromJSON(catalog_json(), simplifyVector = FALSE)
+  for (group in parsed$groups) {
+    expect_true(nzchar(group$title))
+    expect_match(group$colour, "^#[0-9a-fA-F]{6}$")
+  }
+})

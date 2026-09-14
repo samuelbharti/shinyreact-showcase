@@ -23,6 +23,7 @@ class Entry:
     plain_shiny: str
     this_app: str
     domain: str
+    group: str
     library: str
     features: list[str]
     compare: bool
@@ -43,6 +44,7 @@ class Entry:
             "plainShiny": self.plain_shiny,
             "thisApp": self.this_app,
             "domain": self.domain,
+            "group": self.group,
             "library": self.library,
             "features": self.features,
             "compare": self.compare,
@@ -88,6 +90,7 @@ def read_registry(root: Path, language: str) -> dict[str, Entry]:
             plain_shiny=app.get("plain_shiny", ""),
             this_app=app.get("this_app", ""),
             domain=app.get("domain", ""),
+            group=app.get("group", ""),
             library=app.get("library", ""),
             features=list(app.get("features", [])),
             compare=bool(app.get("compare", False)),
@@ -96,6 +99,42 @@ def read_registry(root: Path, language: str) -> dict[str, Entry]:
 
     _refuse_colliding_modules(registry)
     return registry
+
+
+def read_groups(root: Path) -> list[dict]:
+    """The card families, in the order the landing page draws them.
+
+    Read from catalog.yml like everything else. A group the client does not
+    know about would leave its apps unreachable, so the list travels with the
+    cards rather than being repeated in the bundle.
+    """
+    catalog = read_catalog(root)
+    return [
+        {
+            "id": group.get("id", ""),
+            "title": group.get("title", ""),
+            "note": group.get("note", ""),
+            "colour": group.get("colour", "#5c6370"),
+        }
+        for group in catalog.get("groups", [])
+    ]
+
+
+def read_site(root: Path) -> dict:
+    """Who made this and where it lives, for the footer."""
+    site = read_catalog(root).get("site") or {}
+    return {
+        "title": site.get("title", "Shiny React showcase"),
+        "author": site.get("author", ""),
+        "authorUrl": site.get("author_url", ""),
+        "repoUrl": site.get("repo_url", ""),
+        "license": site.get("license", ""),
+        "links": [
+            {"label": link.get("label", ""), "url": link.get("url", "")}
+            for link in site.get("links") or []
+            if link.get("url")
+        ],
+    }
 
 
 def _refuse_colliding_modules(registry: dict[str, Entry]) -> None:

@@ -18,7 +18,7 @@ from starlette.responses import RedirectResponse
 from starlette.routing import Mount, Route
 
 from .loader import LazyApp
-from .registry import Entry, read_catalog, read_registry
+from .registry import Entry, read_catalog, read_groups, read_registry, read_site
 
 
 def build_gallery_app(root: Path) -> ReactApp:
@@ -75,9 +75,12 @@ def _gallery_ui(root: Path, registry: dict[str, Entry], other_base: str):
         for entry in registry.values()
     ]
 
+    groups = read_groups(root)
+    site = read_site(root)
+
     def ui(_request: Request) -> Tag:
         return page_react(
-            _catalog_tag(cards),
+            _catalog_tag(cards, groups, site),
             src_dir=root / "gallery" / "www",
             title="Shiny React showcase",
         )
@@ -85,9 +88,12 @@ def _gallery_ui(root: Path, registry: dict[str, Entry], other_base: str):
     return ui
 
 
-def _catalog_tag(cards: list[dict]) -> Tag:
+def _catalog_tag(cards: list[dict], groups: list[dict], site: dict) -> Tag:
     """The catalog, inlined as JSON for the client to read synchronously."""
-    blob = json.dumps({"language": "Python", "apps": cards}, separators=(",", ":"))
+    blob = json.dumps(
+        {"language": "Python", "apps": cards, "groups": groups, "site": site},
+        separators=(",", ":"),
+    )
     # A literal </ would end the script block early. htmltools escapes its own
     # dependency manifest the same way.
     return tags.script(

@@ -20,14 +20,62 @@
 # features:  which shinyreact hooks or components the app exercises. The
 #            README matrix is built from this, so a gap shows up.
 
+# Who made this and where it lives. The landing page footer reads these,
+# so there is no name or link hard coded in the client.
 site:
+  title: "Shiny React showcase"
+  author: "Samuel Bharti"
+  author_url: "https://github.com/samuelbharti"
+  repo_url: "https://github.com/samuelbharti/shinyreact-showcase"
+  license: "MIT"
   py_url: ""
   r_url: ""
+  # The footer renders this list as it stands. The two shinyreact URLs are the
+  # ones the packages declare for themselves, in the npm package homepage and
+  # the PyPI project URLs, rather than anything guessed from the name.
+  links:
+    - label: "Source on GitHub"
+      url: "https://github.com/samuelbharti/shinyreact-showcase"
+    - label: "Shiny React"
+      url: "https://github.com/posit-dev/shinyreact"
+    - label: "Shiny React docs, Python"
+      url: "https://posit-dev.github.io/shinyreact/py/"
+    - label: "Shiny React docs, JavaScript"
+      url: "https://posit-dev.github.io/shinyreact/js/"
+    - label: "Shiny for Python"
+      url: "https://shiny.posit.co/py/"
+    - label: "Shiny for R"
+      url: "https://shiny.posit.co/r/"
+
+# The families the cards are grouped under on the landing page, in the order
+# they appear. Life sciences first, because that is where this pattern pays
+# for itself soonest: the measurements are large and the picture is the work.
+#
+# A group with nothing finished in it is not drawn at all, so the four planned
+# apps do not leave an empty heading on the page.
+groups:
+  - id: life-sciences
+    title: "Life sciences"
+    note: "Large measurements, and pictures you have to move around inside."
+    colour: "#0f7a4a"
+  - id: analytics
+    title: "Analytics and monitoring"
+    note: "Numbers that have to keep up with whatever you are dragging."
+    colour: "#2f6fed"
+  - id: industry
+    title: "Industry and infrastructure"
+    note: "Markets, sensors, networks and maps."
+    colour: "#b45309"
+  - id: interfaces
+    title: "Editors and interaction"
+    note: "Apps where the hard part is what you type, drag or fill in."
+    colour: "#7c3aed"
 
 apps:
   - slug: cell-atlas
     title: "Cell atlas"
     domain: "Single cell biology"
+    group: life-sciences
     milestone: M1
     status: done
     deploy: gallery
@@ -43,6 +91,7 @@ apps:
   - slug: market-candles
     title: "Market candles"
     domain: "Finance"
+    group: industry
     milestone: M3
     status: done
     deploy: gallery
@@ -58,6 +107,7 @@ apps:
   - slug: sensor-stream
     title: "Sensor stream"
     domain: "IoT telemetry"
+    group: industry
     milestone: M2
     status: done
     deploy: gallery
@@ -73,6 +123,7 @@ apps:
   - slug: genome-tracks
     title: "Genome tracks"
     domain: "Genomics"
+    group: life-sciences
     milestone: M2
     status: done
     deploy: gallery
@@ -88,6 +139,7 @@ apps:
   - slug: slide-viewer
     title: "Slide viewer"
     domain: "Pathology imaging"
+    group: life-sciences
     milestone: M2
     status: done
     deploy: gallery
@@ -103,6 +155,7 @@ apps:
   - slug: city-density
     title: "City density"
     domain: "Geospatial"
+    group: industry
     milestone: M2
     status: done
     deploy: gallery
@@ -118,6 +171,7 @@ apps:
   - slug: protein-view
     title: "Protein view"
     domain: "Structural biology"
+    group: life-sciences
     milestone: M2
     status: done
     deploy: gallery
@@ -133,6 +187,7 @@ apps:
   - slug: linked-brush
     title: "Linked brush"
     domain: "Statistics and EDA"
+    group: analytics
     milestone: M3
     status: done
     deploy: gallery
@@ -148,6 +203,7 @@ apps:
   - slug: query-lab
     title: "Query lab"
     domain: "Data engineering"
+    group: analytics
     milestone: M4
     status: planned
     deploy: gallery
@@ -163,6 +219,7 @@ apps:
   - slug: big-grid
     title: "Big grid"
     domain: "BI and tabular"
+    group: analytics
     milestone: M3
     status: done
     deploy: gallery
@@ -178,6 +235,7 @@ apps:
   - slug: fleet-board
     title: "Fleet board"
     domain: "Operations"
+    group: interfaces
     milestone: M4
     status: planned
     deploy: gallery
@@ -193,6 +251,7 @@ apps:
   - slug: churn-monitor
     title: "Churn monitor"
     domain: "ML monitoring"
+    group: analytics
     milestone: M3
     status: done
     deploy: gallery
@@ -208,6 +267,7 @@ apps:
   - slug: supply-flow
     title: "Supply flow"
     domain: "Supply chain"
+    group: industry
     milestone: M3
     status: done
     deploy: gallery
@@ -223,6 +283,7 @@ apps:
   - slug: text-lens
     title: "Text lens"
     domain: "NLP"
+    group: analytics
     milestone: M4
     status: planned
     deploy: gallery
@@ -238,6 +299,7 @@ apps:
   - slug: survey-builder
     title: "Survey builder"
     domain: "Forms and data entry"
+    group: interfaces
     milestone: M4
     status: planned
     deploy: gallery
