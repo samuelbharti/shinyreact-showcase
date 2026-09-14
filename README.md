@@ -35,7 +35,7 @@ Two more rules keep the apps small:
 
 <!-- catalog:start -->
 
-15 apps, 6 built so far.
+15 apps, 7 built so far.
 
 | # | App | Domain | The claim | Library | Status |
 | --- | --- | --- | --- | --- | --- |
@@ -48,7 +48,7 @@ Two more rules keep the apps small:
 | 7 | [Protein view](apps/protein-view) | Structural biology | Real 3D orbit and style switching, with no htmlwidget to write. | 3Dmol.js | done |
 | 8 | Linked brush | Statistics and EDA | Four charts brush each other instantly, all on the client. | visx | planned |
 | 9 | Query lab | Data engineering | A real editor: syntax highlighting, completion, and a squiggle on the failing line. | CodeMirror 6 | planned |
-| 10 | Big grid | BI and tabular | A million rows, with sort and filter that feel instant. | TanStack Table + Virtual | planned |
+| 10 | [Big grid](apps/big-grid) | BI and tabular | All million rows scrollable, with filter and sort in the browser. | TanStack Virtual | done |
 | 11 | Fleet board | Operations | Drag and drop that commits optimistically: the card moves before the server confirms. | dnd-kit | planned |
 | 12 | Churn monitor | ML monitoring | Move the decision threshold and every metric updates with no round trip. | visx | planned |
 | 13 | Supply flow | Supply chain | States animate into each other instead of flickering. | d3-sankey + motion | planned |
@@ -62,7 +62,7 @@ counter, so you can see the difference rather than take it on trust.
 
 - **Cell atlas** 200,000 cells stay interactive, with lasso select.
 - **Market candles** Crosshair, pan and zoom with zero server round trips.
-- **Big grid** A million rows, with sort and filter that feel instant.
+- **Big grid** All million rows scrollable, with filter and sort in the browser.
 - **Churn monitor** Move the decision threshold and every metric updates with no round trip.
 
 ### Feature coverage

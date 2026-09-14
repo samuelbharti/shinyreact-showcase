@@ -1,0 +1,14 @@
+{
+  "name": "big-grid",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite build --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --root ../.. apps/big-grid"
+  },
+  "dependencies": {
+    "@tanstack/react-virtual": "^3.14.12"
+  }
+}
