@@ -35,14 +35,14 @@ Two more rules keep the apps small:
 
 <!-- catalog:start -->
 
-15 apps, 2 built so far.
+15 apps, 3 built so far.
 
 | # | App | Domain | The claim | Library | Status |
 | --- | --- | --- | --- | --- | --- |
 | 1 | [Cell atlas](apps/cell-atlas) | Single cell biology | 200,000 cells stay interactive, with lasso select. | regl-scatterplot | done |
 | 2 | Market candles | Finance | Crosshair, pan and zoom with zero server round trips. | lightweight-charts | planned |
 | 3 | [Sensor stream](apps/sensor-stream) | IoT telemetry | Updates at 20Hz append one point instead of redrawing the plot. | uPlot | done |
-| 4 | Genome tracks | Genomics | Drag the locus across a large interval set with no server call. | canvas + d3-scale | planned |
+| 4 | [Genome tracks](apps/genome-tracks) | Genomics | Drag the locus across a large interval set with no server call. | canvas + d3-scale | done |
 | 5 | Slide viewer | Pathology imaging | Gigapixel deep zoom, which a server rendered image cannot do at all. | OpenSeadragon | planned |
 | 6 | City density | Geospatial | A million points as a GPU hex layer, rebinned on the client while zooming. | deck.gl + maplibre-gl | planned |
 | 7 | Protein view | Structural biology | Real 3D orbit and style switching, with no htmlwidget to write. | 3Dmol.js | planned |
