@@ -146,11 +146,11 @@ function Footer() {
     <footer className="site-footer">
       <div className="footer-inner">
         <p className="footer-about">
-          Nothing here downloads data or needs a key. Every app generates its
-          own from a hash of the row number, so the Python server, the R server
-          and the browser all land on the same values. That is what lets the
-          whole gallery run in one process and deploy as a single piece of
-          content.
+          Nothing here fetches data at run time and nothing needs a key. Most
+          apps compute theirs from the row number, so the Python server, the R
+          server and the browser land on the same values. A few ship a small
+          file next to the code. Either way the whole gallery runs in one
+          process and deploys as a single piece of content.
         </p>
 
         <ul className="footer-links">

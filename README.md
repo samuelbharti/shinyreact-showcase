@@ -27,8 +27,9 @@ README of the app. If you cannot write them, the app does not make a point.
 Two more rules keep the apps small:
 
 1. One screen per app. No tabs and no wizards. The gallery is the navigation.
-2. No downloads at run time and no API keys. Each app ships its own small data
-   file. This is what lets one process serve every app.
+2. No downloads at run time and no API keys. An app either computes its data
+   or ships a small file under `data/`. This is what lets one process serve
+   every app.
 
 ## The apps
 
