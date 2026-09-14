@@ -1,0 +1,14 @@
+{
+  "name": "sensor-stream",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite build --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --root ../.. apps/sensor-stream"
+  },
+  "dependencies": {
+    "uplot": "^1.6.32"
+  }
+}
