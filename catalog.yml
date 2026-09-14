@@ -164,16 +164,16 @@ apps:
     title: "Big grid"
     domain: "BI and tabular"
     milestone: M3
-    status: planned
+    status: done
     deploy: gallery
     languages: [py, r]
-    library: "TanStack Table + Virtual"
+    library: "TanStack Virtual"
     compare: true
     features: [useShinyInput, useShinyOutputValue, useShinyOutputStatus, useShinyInitialized]
-    claim: "A million rows, with sort and filter that feel instant."
-    plain_shiny: "DT ships a page over the wire per interaction, and selectize gives up past a few thousand options."
-    this_app: "Virtualized rows, client side sort, and server side paging only for what is off screen."
-    blurb: "A million row grid that sorts and filters without waiting on the server."
+    claim: "All million rows scrollable, with filter and sort in the browser."
+    plain_shiny: "DT sends one page per interaction, and you cannot scroll past it without another round trip."
+    this_app: "Columnar typed arrays, about twenty rows in the page, and a scrollbar that covers the whole table."
+    blurb: "A million row grid you can scroll end to end, filtered and sorted in the browser."
 
   - slug: fleet-board
     title: "Fleet board"
