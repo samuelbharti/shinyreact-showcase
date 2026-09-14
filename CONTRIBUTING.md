@@ -8,7 +8,7 @@ explains it.
 An app belongs here only when you can fill in three lines:
 
 ```
-Claim:        500,000 cells stay interactive, with lasso select.
+Claim:        200,000 cells stay interactive, with lasso select.
 Plain Shiny:  A server rendered PNG, or a plotly figure that stalls past 10,000 points.
 This app:     One payload, a WebGL scatter, selection handled on the client.
 ```
@@ -16,7 +16,7 @@ This app:     One payload, a WebGL scatter, selection handled on the client.
 The lines go in `catalog.yml` and in the README of the app. They must match.
 
 A claim needs a number, and a note on how you measured it. "Faster" is not a
-claim. "60 frames per second while panning 500,000 points, measured with the
+claim. "60 frames per second while panning 200,000 points, measured with the
 Chrome performance panel" is a claim.
 
 If the same app is as easy to write in plain Shiny, it does not belong here.

@@ -1,0 +1,6 @@
+# Python dependencies for this app alone. tools/sync-requirements.mjs rolls
+# every app file up into the requirements.txt at the repo root, which is what
+# Connect Cloud installs for the gallery deployment.
+shiny>=1.8.0
+shinyreact>=0.1.0
+numpy>=2.0

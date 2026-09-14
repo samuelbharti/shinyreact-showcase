@@ -1,0 +1,108 @@
+{
+  "n_cells": 200000,
+  "seed": 20260913,
+  "bounds": [
+    -8.928791204554777,
+    -8.428784742210425,
+    7.959928136968543,
+    7.908612958500324
+  ],
+  "sigma": 0.75,
+  "genes": [
+    "CD3D",
+    "MS4A1",
+    "LYZ",
+    "NKG7"
+  ],
+  "clusters": [
+    {
+      "name": "CD4 T cells",
+      "color": "#4c78a8",
+      "count": 47000,
+      "profile": [
+        3.6,
+        0.1,
+        0.2,
+        0.3
+      ]
+    },
+    {
+      "name": "CD8 T cells",
+      "color": "#72b7b2",
+      "count": 29600,
+      "profile": [
+        3.2,
+        0.1,
+        0.2,
+        1.9
+      ]
+    },
+    {
+      "name": "Naive B cells",
+      "color": "#f58518",
+      "count": 24200,
+      "profile": [
+        0.2,
+        3.4,
+        0.3,
+        0.1
+      ]
+    },
+    {
+      "name": "Memory B cells",
+      "color": "#ffbf79",
+      "count": 13600,
+      "profile": [
+        0.2,
+        3.1,
+        0.4,
+        0.1
+      ]
+    },
+    {
+      "name": "CD14 monocytes",
+      "color": "#54a24b",
+      "count": 39200,
+      "profile": [
+        0.2,
+        0.2,
+        4.1,
+        0.2
+      ]
+    },
+    {
+      "name": "FCGR3A monocytes",
+      "color": "#88d27a",
+      "count": 14800,
+      "profile": [
+        0.2,
+        0.2,
+        3.3,
+        0.5
+      ]
+    },
+    {
+      "name": "NK cells",
+      "color": "#e45756",
+      "count": 21200,
+      "profile": [
+        0.5,
+        0.1,
+        0.3,
+        4.0
+      ]
+    },
+    {
+      "name": "Dendritic cells",
+      "color": "#b279a2",
+      "count": 10400,
+      "profile": [
+        0.3,
+        0.6,
+        2.6,
+        0.3
+      ]
+    }
+  ],
+  "layout": "int16 x[n], int16 y[n], uint8 cluster[n], uint8 noise[g][n]"
+}

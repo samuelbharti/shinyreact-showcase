@@ -1,0 +1,12 @@
+{
+  "name": "cell-atlas",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite build --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --root ../.. apps/cell-atlas"
+  },
+  "dependencies": {}
+}
