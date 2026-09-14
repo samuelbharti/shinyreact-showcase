@@ -61,6 +61,25 @@ load_app <- function(slug) {
   loaded
 }
 
+# The counter, on every page the gallery serves.
+#
+# It goes here rather than into the app bundles for the same reason the back
+# link does: the same www/ui.js also serves the app standalone, where there is
+# nothing to count. Blank turns it off.
+#
+# count.js drops requests from local addresses on its own, so running this on
+# 127.0.0.1 never reaches the stats.
+gallery_analytics <- function(url = REGISTRY$site$analytics %||% "") {
+  if (is.null(url) || !nzchar(url)) {
+    return(NULL)
+  }
+  htmltools::tags$script(
+    `data-goatcounter` = url,
+    async = NA,
+    src = "//gc.zgo.at/count.js"
+  )
+}
+
 # The link back to the gallery, added to every app page.
 #
 # It lives here rather than in fifteen client bundles, because the same

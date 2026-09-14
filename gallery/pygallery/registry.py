@@ -120,6 +120,16 @@ def read_groups(root: Path) -> list[dict]:
     ]
 
 
+def read_analytics(root: Path) -> str:
+    """The analytics endpoint, or "" when there is none.
+
+    Read on its own rather than through read_site(), because this one never
+    reaches the browser as data. It becomes a script tag on the server and the
+    client has no use for the string.
+    """
+    return (read_catalog(root).get("site") or {}).get("analytics", "") or ""
+
+
 def read_site(root: Path) -> dict:
     """Who made this and where it lives, for the footer."""
     site = read_catalog(root).get("site") or {}

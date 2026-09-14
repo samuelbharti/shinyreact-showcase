@@ -28,6 +28,11 @@ site:
   author_url: "https://github.com/samuelbharti"
   repo_url: "https://github.com/samuelbharti/shinyreact-showcase"
   license: "MIT"
+  # GoatCounter, which sets no cookies and stores no personal data, so it
+  # needs no consent banner. Blank turns it off. count.js drops requests from
+  # local addresses on its own, so running the gallery on 127.0.0.1 does not
+  # reach the stats and no conditional is needed here.
+  analytics: "https://samuelbharti.goatcounter.com/count"
   py_url: ""
   r_url: ""
   # The footer renders this list as it stands. The two shinyreact URLs are the

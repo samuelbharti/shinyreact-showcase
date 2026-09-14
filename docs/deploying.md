@@ -119,6 +119,34 @@ are kept for the day the option can be set.
 This is not blocking anything. The R gallery is already waiting on
 `shinyreact` reaching CRAN before it can be deployed at all.
 
+## Analytics
+
+GoatCounter counts page views, on the landing page and on every app the
+gallery serves. The endpoint is one line in `catalog.yml`:
+
+```yaml
+site:
+  analytics: "https://samuelbharti.goatcounter.com/count"
+```
+
+Blank turns it off, and a fork that does not change it is not reporting to
+anyone, because nothing is written into the code.
+
+The tag is added by the gallery rather than by the apps, in two places per
+language: the landing page in `router`, and every app page in `loader`, next
+to the back link. The same `www/ui.js` also serves an app standalone, where
+there is nothing to count, which is why it does not live in the bundles.
+
+Two things worth knowing. `count.js` drops requests from local addresses on
+its own, so running the gallery on 127.0.0.1 never reaches the stats and
+there is no environment check to write. And GoatCounter sets no cookies and
+stores no personal data, so no consent banner is needed.
+
+An app opened from the gallery counts twice in the sense a reader might
+expect: once for the landing page and once for the app, because each app is
+its own page load with its own Shiny session. That is what you want here,
+since the interesting number is which apps people open.
+
 ## Known faults worth expecting
 
 These came out of running the same setup in `shiny-showcase-bioinformatics`.

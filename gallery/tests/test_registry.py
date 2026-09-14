@@ -21,6 +21,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "gallery"))
 
 from pygallery.registry import (  # noqa: E402
+    read_analytics,
     read_catalog,
     read_groups,
     read_registry,
@@ -242,3 +243,35 @@ def test_the_landing_page_carries_the_groups_and_the_footer(client):
     known = {group["id"] for group in payload["groups"]}
     for card in payload["apps"]:
         assert card["group"] in known
+
+
+def test_the_counter_is_on_the_landing_page(client):
+    """Analytics that quietly stop counting are worse than none.
+
+    It is one tag added in two places rather than something inside eleven
+    bundles, so a refactor that drops it would be silent everywhere at once.
+    """
+    # Counted on the script source, not on "goatcounter": that word appears
+    # twice in one tag, once as the attribute and once in the host name.
+    body = client.get("/").text
+    assert body.count("gc.zgo.at/count.js") == 1
+    assert "samuelbharti.goatcounter.com/count" in body
+
+
+def test_the_counter_is_on_every_app_page(client):
+    root = Path(__file__).resolve().parents[2]
+    for app in read_catalog(root)["apps"]:
+        if app.get("deploy") != "gallery" or app["status"] != "done":
+            continue
+        body = client.get(f"/app/{app['slug']}/").text
+        assert body.count("gc.zgo.at/count.js") == 1, app["slug"]
+
+
+def test_the_counter_is_read_from_the_catalog_and_can_be_turned_off():
+    """No URL is written into the code, so a fork is not reporting to me."""
+    root = Path(__file__).resolve().parents[2]
+    assert read_analytics(root).startswith("https://")
+
+    from pygallery.loader import analytics_tag
+
+    assert analytics_tag("") is None
