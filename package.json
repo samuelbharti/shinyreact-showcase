@@ -13,6 +13,7 @@
     "typecheck": "npm run typecheck --workspaces --if-present",
     "test": "vitest run",
     "check-built": "node tools/check-built.mjs",
+    "thumbs": "node tools/shoot-thumbs.mjs",
     "catalog": "node tools/render-catalog.mjs",
     "new-app": "node tools/new-app.mjs"
   },

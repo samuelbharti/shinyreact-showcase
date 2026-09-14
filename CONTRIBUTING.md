@@ -109,6 +109,39 @@ npm run build -w apps/<slug>
 does not match its source. CI runs it on every pull request, so a stale bundle
 cannot merge.
 
+## Gallery thumbnails are committed too
+
+Every card on the landing page is led by a screenshot of the app behind it,
+in `gallery/www/thumbs/<slug>.jpg`. They are committed for the same reason
+the bundles are: Connect Cloud runs no Node and no browser at deploy time.
+
+A screenshot is the honest kind of thumbnail and also the kind that goes
+quietly out of date. Retake them after you change what an app looks like:
+
+```powershell
+npm run thumbs                        # every finished app
+npm run thumbs -- cell-atlas          # just one
+npm run thumbs -- --check             # what CI runs
+```
+
+It starts the Python gallery itself, walks `catalog.yml`, shoots each app at
+1280 wide, crops to the top of the page and writes 720x450 JPEG. All eleven
+come to about 370 kB. `--check` fails when a finished app has no thumbnail,
+or when a thumbnail belongs to no app, so adding an app without a picture
+does not get past CI.
+
+One thing to know if it ever comes back blank. Chrome leaves WebGL out of a
+page screenshot in headless mode, so an app drawing into a WebGL canvas
+photographs as an empty box. Before the shot, every canvas with anything in
+it gets an `<img>` of its own pixels laid over it, and the screenshot picks
+that up like any other image. The tool prints how many canvases it found and
+how many it overlaid, which is the number to look at when a picture is wrong.
+
+The work is split across three files because the tools are: `shoot-thumbs.R`
+drives the browser through chromote, `shoot-thumbs.py` crops and encodes
+through Pillow, and `shoot-thumbs.mjs` starts the server and ties the two
+together.
+
 ## Tests
 
 Write down what the app does, in plain English, before you write the tests. An

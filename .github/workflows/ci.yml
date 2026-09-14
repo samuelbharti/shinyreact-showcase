@@ -56,6 +56,9 @@ jobs:
       - name: requirements.txt is the union of the app files
         run: node tools/sync-requirements.mjs --check
 
+      - name: Every finished app has a gallery thumbnail
+        run: node tools/shoot-thumbs.mjs --check
+
   python:
     name: Python (lint, tests)
     runs-on: ubuntu-latest

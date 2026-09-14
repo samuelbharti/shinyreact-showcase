@@ -117,8 +117,12 @@ chrome$Runtime$exceptionThrown(callback_ = function(event) {
 
 `%||%` <- function(a, b) if (is.null(a)) b else a
 
+# navigate(wait_ = TRUE) already waits for the navigation to commit, and on a
+# page that loads quickly the load event can fire inside that call. Waiting
+# for it again then sits there until the timeout and kills the run for no
+# reason, which is a confusing way to lose a check that was about to pass.
 chrome$Page$navigate(url, wait_ = TRUE)
-chrome$Page$loadEventFired(wait_ = TRUE, timeout_ = 30)
+try(chrome$Page$loadEventFired(wait_ = TRUE, timeout_ = 20), silent = TRUE)
 
 # A Shiny React app is not finished when load fires. The websocket still has
 # to connect and the first outputs have to arrive.
