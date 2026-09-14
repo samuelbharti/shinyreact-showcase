@@ -128,7 +128,6 @@ function Card({ entry }: { entry: Entry }) {
         <a className="open" href={entry.href}>
           Open app
         </a>
-        {entry.compare ? <span className="tag">Runs both paths</span> : null}
         {entry.other ? (
           <a className="other" href={entry.other} {...away(entry.other)}>
             {CATALOG.language === "Python" ? "R version" : "Python version"}
