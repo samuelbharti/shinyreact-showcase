@@ -32,7 +32,7 @@ export type Group = {
   colour: string;
 };
 
-export type SiteLink = { label: string; url: string };
+export type SiteLink = { label: string; url: string; hero: boolean };
 
 export type Site = {
   title: string;

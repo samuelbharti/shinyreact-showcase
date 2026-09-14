@@ -70,7 +70,11 @@ read_registry <- function(root = ROOT) {
       repoUrl = site$repo_url %||% "",
       license = site$license %||% "",
       links = lapply(site$links %||% list(), function(link) {
-        list(label = link$label %||% "", url = link$url %||% "")
+        list(
+          label = link$label %||% "",
+          url = link$url %||% "",
+          hero = isTRUE(link$hero)
+        )
       })
     )
   )

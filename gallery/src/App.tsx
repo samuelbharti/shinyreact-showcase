@@ -48,11 +48,13 @@ export default function App() {
           </p>
 
           <div className="hero-links">
-            {links.slice(0, 2).map((link) => (
-              <a key={link.url} href={link.url} {...away(link.url)}>
-                {link.label}
-              </a>
-            ))}
+            {links
+              .filter((link) => link.hero)
+              .map((link) => (
+                <a key={link.url} href={link.url} {...away(link.url)}>
+                  {link.label}
+                </a>
+              ))}
           </div>
         </div>
       </header>
