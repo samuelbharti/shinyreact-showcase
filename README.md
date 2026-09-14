@@ -35,12 +35,12 @@ Two more rules keep the apps small:
 
 <!-- catalog:start -->
 
-15 apps, 7 built so far.
+15 apps, 8 built so far.
 
 | # | App | Domain | The claim | Library | Status |
 | --- | --- | --- | --- | --- | --- |
 | 1 | [Cell atlas](apps/cell-atlas) | Single cell biology | 200,000 cells stay interactive, with lasso select. | regl-scatterplot | done |
-| 2 | Market candles | Finance | Crosshair, pan and zoom with zero server round trips. | lightweight-charts | planned |
+| 2 | [Market candles](apps/market-candles) | Finance | Crosshair, pan and zoom with zero server round trips. | lightweight-charts | done |
 | 3 | [Sensor stream](apps/sensor-stream) | IoT telemetry | Updates at 20Hz append one point instead of redrawing the plot. | uPlot | done |
 | 4 | [Genome tracks](apps/genome-tracks) | Genomics | Drag the locus across a large interval set with no server call. | canvas + d3-scale | done |
 | 5 | [Slide viewer](apps/slide-viewer) | Pathology imaging | Gigapixel deep zoom, which a server rendered image cannot do at all. | OpenSeadragon | done |
@@ -74,7 +74,7 @@ Which app exercises which part of shinyreact. A row reading
 | --- | --- | --- |
 | `useShinyInput` | 13 | cell-atlas, market-candles, genome-tracks, slide-viewer, city-density, protein-view, linked-brush, query-lab, big-grid, churn-monitor, supply-flow, text-lens, survey-builder |
 | `useShinyInputValue` | 1 | linked-brush |
-| `useSetShinyInput` | 1 | fleet-board |
+| `useSetShinyInput` | 2 | market-candles, fleet-board |
 | `useShinyOutputValue` | 14 | cell-atlas, market-candles, genome-tracks, slide-viewer, city-density, protein-view, linked-brush, query-lab, big-grid, fleet-board, churn-monitor, supply-flow, text-lens, survey-builder |
 | `useShinyOutputStatus` | 6 | cell-atlas, market-candles, city-density, protein-view, big-grid, text-lens |
 | `useShinyOutputError` | 1 | query-lab |
@@ -82,7 +82,7 @@ Which app exercises which part of shinyreact. A row reading
 | `useShinyInitialized` | 15 | cell-atlas, market-candles, sensor-stream, genome-tracks, slide-viewer, city-density, protein-view, linked-brush, query-lab, big-grid, fleet-board, churn-monitor, supply-flow, text-lens, survey-builder |
 | `useShinyBusy` | 3 | sensor-stream, query-lab, text-lens |
 | `ShinyOutput` | 1 | protein-view |
-| `ImageOutput` | 1 | churn-monitor |
+| `ImageOutput` | 2 | market-candles, churn-monitor |
 | `ShinyModuleProvider` | 1 | fleet-board |
 | `typed inputs` | 1 | survey-builder |
 | `bookmarking` | 1 | supply-flow |

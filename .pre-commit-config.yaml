@@ -94,7 +94,9 @@ repos:
     hooks:
       - id: codespell
         # ser is serine, and every amino acid table in this repo lists it.
-        args: ["--ignore-words-list=ser,nd,te,fro"]
+        # delt is a ticker symbol. trough is the low after a peak, which is
+        # the word a drawdown test wants.
+        args: ["--ignore-words-list=ser,nd,te,fro,delt,trough"]
         # Bundled data is copied from upstream, not written here. A PDB file
         # is full of three letter residue codes that read as typos.
         exclude: '^(package-lock\.json|renv\.lock|manifest\.json|apps/[^/]+/data/.*)$'
