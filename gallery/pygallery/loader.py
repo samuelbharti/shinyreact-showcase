@@ -27,8 +27,12 @@ if TYPE_CHECKING:
 class LazyApp:
     """An ASGI app that becomes `apps/<slug>` on first use."""
 
-    def __init__(self, entry: Entry) -> None:
+    def __init__(self, entry: Entry, analytics: str = "") -> None:
         self._entry = entry
+        # Handed in rather than read from catalog.yml here, so one app loading
+        # does not reopen the catalog and this class keeps knowing only about
+        # its own directory.
+        self._analytics = analytics
         self._app: App | None = None
         self._lock = anyio.Lock()
 
@@ -88,6 +92,7 @@ class LazyApp:
             ui=lambda _request: page_react(
                 _back_link(),
                 _back_link_style(),
+                analytics_tag(self._analytics),
                 src_dir=directory / "www",
                 title=self._entry.title,
             ),
@@ -105,6 +110,27 @@ def _import_module(name: str, path: Path) -> ModuleType:
     sys.modules[name] = module
     spec.loader.exec_module(module)
     return module
+
+
+def analytics_tag(url: str):
+    """The counter, on every page the gallery serves.
+
+    It goes here rather than into the app bundles for the same reason the back
+    link does: the same www/ui.js also serves the app standalone, where there
+    is nothing to count. One tag per served page, added in two places, covers
+    the landing page and all eleven apps.
+
+    Every attribute goes through a dict because `async` is a Python keyword.
+    """
+    if not url:
+        return None
+    return tags.script(
+        **{
+            "data-goatcounter": url,
+            "async": "",
+            "src": "//gc.zgo.at/count.js",
+        }
+    )
 
 
 def _back_link():

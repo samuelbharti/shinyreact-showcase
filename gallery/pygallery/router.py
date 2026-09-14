@@ -17,8 +17,15 @@ from starlette.requests import Request
 from starlette.responses import RedirectResponse
 from starlette.routing import Mount, Route
 
-from .loader import LazyApp
-from .registry import Entry, read_catalog, read_groups, read_registry, read_site
+from .loader import LazyApp, analytics_tag
+from .registry import (
+    Entry,
+    read_analytics,
+    read_catalog,
+    read_groups,
+    read_registry,
+    read_site,
+)
 
 
 def build_gallery_app(root: Path) -> ReactApp:
@@ -26,6 +33,7 @@ def build_gallery_app(root: Path) -> ReactApp:
     registry = read_registry(root, language="py")
     catalog = read_catalog(root)
     other_base = (catalog.get("site") or {}).get("r_url", "") or ""
+    analytics = read_analytics(root)
 
     app = ReactApp(_gallery_server, ui=_gallery_ui(root, registry, other_base))
 
@@ -36,7 +44,7 @@ def build_gallery_app(root: Path) -> ReactApp:
         # matches everything, so Starlette's redirect_slashes fallback never
         # gets a turn. Verified against py-shiny 1.8.
         routes.append(Route(f"/app/{entry.slug}", _redirect_to_slash, methods=["GET"]))
-        routes.append(Mount(f"/app/{entry.slug}", app=LazyApp(entry)))
+        routes.append(Mount(f"/app/{entry.slug}", app=LazyApp(entry, analytics)))
 
     # A slug nobody knows lands on the gallery rather than in Shiny's static
     # file handler, which would 404 with nothing to explain it.
@@ -77,10 +85,12 @@ def _gallery_ui(root: Path, registry: dict[str, Entry], other_base: str):
 
     groups = read_groups(root)
     site = read_site(root)
+    analytics = read_analytics(root)
 
     def ui(_request: Request) -> Tag:
         return page_react(
             _catalog_tag(cards, groups, site),
+            analytics_tag(analytics),
             src_dir=root / "gallery" / "www",
             title="shinyreact showcase",
         )

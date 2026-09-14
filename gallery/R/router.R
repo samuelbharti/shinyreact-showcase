@@ -22,13 +22,13 @@ gallery_ui <- function() {
 router_ui <- function(req) {
   slug <- gallery_slug(req$QUERY_STRING)
   if (is.null(slug)) {
-    return(gallery_ui())
+    return(htmltools::tagList(gallery_ui(), gallery_analytics()))
   }
 
   loaded <- load_app(slug)
   # An app that bookmarks defines `ui` as a function of the request.
   ui <- if (is.function(loaded$ui)) loaded$ui(req) else loaded$ui
-  htmltools::tagList(ui, gallery_back_link())
+  htmltools::tagList(ui, gallery_back_link(), gallery_analytics())
 }
 
 router_server <- function(input, output, session) {
